@@ -9,8 +9,11 @@
 <meta name="theme-color" content="#4F46E5">
 
 <link rel="manifest" href="{% url 'core:manifest' %}">
-<link rel="icon" href="{% static 'img/icon-192.png' %}">
-<link rel="apple-touch-icon" href="{% static 'img/icon-192.png' %}">
+<link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon-16.png' %}">
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32.png' %}">
+<link rel="icon" type="image/png" sizes="48x48" href="{% static 'img/favicon-48.png' %}">
+<link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -27,7 +30,7 @@
   {% if user.is_authenticated %}
   <div class="topbar">
     <a href="{% url 'core:dashboard' %}" style="display:flex;align-items:center;gap:8px;">
-      <img src="{% static 'img/logo.svg' %}" width="30" height="30" alt="Lexera">
+      <img src="{% static 'img/icon-192.png' %}" width="30" height="30" style="border-radius:8px;" alt="Lexera">
       <span class="font-display" style="font-size:18px;color:var(--indigo-600)">Lexera</span>
     </a>
     <div style="display:flex;gap:6px;align-items:center;">
