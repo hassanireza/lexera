@@ -3,6 +3,7 @@
 <img src="docs/assets/banner.svg" alt="Lexera banner" width="100%">
 
 <br>
+<br>
 
 [![Django](https://img.shields.io/badge/Django-6.0-4F46E5?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
 [![Python](https://img.shields.io/badge/Python-3.12-3730A5?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
