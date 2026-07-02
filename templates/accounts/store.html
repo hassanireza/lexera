@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="padding:16px;">
+  <h1 class="font-display" style="font-size:22px;margin-bottom:4px;">🛍️ Store</h1>
+  <p class="muted" style="margin-bottom:16px;">You have <strong>{{ user.coins }} 🪙</strong> coins.</p>
+</div>
+<div style="padding:0 16px;display:flex;flex-direction:column;gap:12px;">
+  {% for item in items %}
+  <div class="card card-pad" style="display:flex;align-items:center;gap:14px;">
+    <div style="font-size:30px;">{{ item.icon }}</div>
+    <div style="flex:1;">
+      <div style="font-weight:800;">{{ item.name }}</div>
+      <div class="muted" style="font-size:13px;">{{ item.description }}</div>
+    </div>
+    <form method="post" action="{% url 'accounts:buy_item' key=item.key %}">
+      {% csrf_token %}
+      <button class="btn btn-coral" style="padding:10px 14px;font-size:13px;">{{ item.price_coins }} 🪙</button>
+    </form>
+  </div>
+  {% empty %}<p class="muted">Store is empty — run the seed command.</p>{% endfor %}
+</div>
+<div style="padding:16px;">
+  <div class="card card-pad">
+    <div style="font-weight:800;">❄️ Streak freezes owned: {{ user.streak_freeze_count }}</div>
+    <div class="muted" style="font-size:13px;">Automatically protects your streak if you miss a day.</div>
+  </div>
+</div>
+{% endblock %}

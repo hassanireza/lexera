@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="padding:16px;">
+  <h1 class="font-display" style="font-size:22px;margin-bottom:12px;">Find friends</h1>
+  <form method="get" style="display:flex;gap:8px;margin-bottom:16px;">
+    <input type="text" name="q" value="{{ q }}" placeholder="Search by name or username" style="flex:1;padding:12px 14px;border-radius:12px;border:2px solid var(--ink-100);">
+    <button class="btn btn-primary">Search</button>
+  </form>
+</div>
+<div class="card" style="margin:0 16px;">
+  {% for u in results %}
+  <div class="leader-row">
+    <div class="avatar-circle">{{ u.avatar_emoji }}</div>
+    <a href="{% url 'accounts:profile' username=u.username %}" style="flex:1;font-weight:700;">{{ u.display_name|default:u.username }}</a>
+    <form method="post" action="{% url 'accounts:toggle_follow' username=u.username %}">
+      {% csrf_token %}
+      <button class="btn {% if u.id in following_ids %}btn-outline{% else %}btn-primary{% endif %}" style="padding:8px 14px;font-size:13px;">
+        {% if u.id in following_ids %}Following{% else %}Follow{% endif %}
+      </button>
+    </form>
+  </div>
+  {% empty %}
+  {% if q %}<p class="muted" style="padding:16px;">No players found.</p>{% endif %}
+  {% endfor %}
+</div>
+{% endblock %}

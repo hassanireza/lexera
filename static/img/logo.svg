@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6C63F1"/>
+      <stop offset="100%" stop-color="#4F46E5"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#g)"/>
+  <!-- Abstract "L" formed as an open book / speech-bubble tail, referencing
+       "Lexera" (lexicon) + conversation. The notch doubles as a play/level marker. -->
+  <path d="M20 14 h8 v24 h16 v8 H20 a4 4 0 0 1 -4 -4 V18 a4 4 0 0 1 4 -4 z" fill="#FAF9FF"/>
+  <circle cx="46" cy="18" r="5" fill="#FF6B52"/>
+</svg>

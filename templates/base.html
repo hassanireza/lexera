@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>{% block title %}Lexera — Level up your words{% endblock %}</title>
+<meta name="description" content="Lexera is a gamified English vocabulary app: lessons, wordle, word sudoku, synonym connections and more.">
+<meta name="theme-color" content="#4F46E5">
+
+<link rel="manifest" href="{% url 'core:manifest' %}">
+<link rel="icon" href="{% static 'img/icon-192.png' %}">
+<link rel="apple-touch-icon" href="{% static 'img/icon-192.png' %}">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/lexera.css' %}">
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+<div class="app-shell" data-birthday="{% if player_is_birthday %}true{% else %}false{% endif %}">
+  {% block topbar %}
+  {% if user.is_authenticated %}
+  <div class="topbar">
+    <a href="{% url 'core:dashboard' %}" style="display:flex;align-items:center;gap:8px;">
+      <img src="{% static 'img/logo.svg' %}" width="30" height="30" alt="Lexera">
+      <span class="font-display" style="font-size:18px;color:var(--indigo-600)">Lexera</span>
+    </a>
+    <div style="display:flex;gap:6px;align-items:center;">
+      <span class="stat-chip streak"><span class="flame">🔥</span>{{ player_streak }}</span>
+      <span class="stat-chip lives">❤️{{ player_lives }}</span>
+      <span class="stat-chip coins">🪙{{ player_coins }}</span>
+    </div>
+  </div>
+  {% endif %}
+  {% endblock %}
+
+  {% if messages %}
+  <div style="padding:10px 16px 0;">
+    {% for message in messages %}
+      <div class="card card-pad" style="margin-bottom:8px;font-weight:700;font-size:14px;{% if message.tags == 'error' %}color:var(--ruby-600);background:var(--ruby-100);border-color:var(--ruby-100);{% else %}color:var(--mint-600);background:var(--mint-100);border-color:var(--mint-100);{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  {% if user.is_authenticated %}
+  {% block tabbar %}
+  <nav class="tabbar">
+    <a href="{% url 'core:dashboard' %}" class="tab-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+      <span class="icon">🏠</span>Learn
+    </a>
+    <a href="{% url 'games:dictionary' %}" class="tab-item {% if request.resolver_match.url_name == 'dictionary' %}active{% endif %}">
+      <span class="icon">📖</span>Dictionary
+    </a>
+    <a href="{% url 'accounts:leaderboard' %}" class="tab-item {% if request.resolver_match.url_name == 'leaderboard' %}active{% endif %}">
+      <span class="icon">🏆</span>Ranks
+    </a>
+    <a href="{% url 'accounts:friends' %}" class="tab-item {% if request.resolver_match.url_name == 'friends' %}active{% endif %}">
+      <span class="icon">👥</span>Friends
+    </a>
+    <a href="{% url 'accounts:profile' username=user.username %}" class="tab-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+      <span class="icon">{{ user.avatar_emoji }}</span>Profile
+    </a>
+  </nav>
+  {% endblock %}
+  {% endif %}
+</div>
+
+<script src="{% static 'js/app.js' %}"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('{% url "core:service_worker" %}'));
+}
+</script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

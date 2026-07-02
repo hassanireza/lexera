@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="padding:16px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+    <h1 class="font-display" style="font-size:22px;">👥 Friends</h1>
+    <a href="{% url 'accounts:find_friends' %}" class="btn btn-primary" style="padding:8px 14px;font-size:13px;">+ Find</a>
+  </div>
+  <div class="section-title">Following ({{ following|length }})</div>
+</div>
+<div class="card" style="margin:0 16px 20px;">
+  {% for u in following %}
+  <div class="leader-row">
+    <div class="avatar-circle">{{ u.avatar_emoji }}</div>
+    <a href="{% url 'accounts:profile' username=u.username %}" style="flex:1;font-weight:700;">{{ u.display_name|default:u.username }}</a>
+    <div class="muted" style="font-size:13px;">🔥{{ u.current_streak }}</div>
+  </div>
+  {% empty %}<p class="muted" style="padding:16px;">You're not following anyone yet.</p>{% endfor %}
+</div>
+<div style="padding:0 16px;"><div class="section-title">Followers ({{ followers|length }})</div></div>
+<div class="card" style="margin:0 16px 20px;">
+  {% for u in followers %}
+  <div class="leader-row">
+    <div class="avatar-circle">{{ u.avatar_emoji }}</div>
+    <a href="{% url 'accounts:profile' username=u.username %}" style="flex:1;font-weight:700;">{{ u.display_name|default:u.username }}</a>
+  </div>
+  {% empty %}<p class="muted" style="padding:16px;">No followers yet.</p>{% endfor %}
+</div>
+{% endblock %}

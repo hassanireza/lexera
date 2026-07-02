@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="game-screen">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <a href="{% url 'core:dashboard' %}" class="btn-ghost" style="font-size:22px;">✕</a>
+    <div class="section-title" style="margin:0;flex:1;text-align:center;">Word Guess</div>
+    <div style="width:22px;"></div>
+  </div>
+  <p class="muted" style="text-align:center;font-size:13px;">💡 {{ hint }}</p>
+
+  <div id="wordleGrid" class="wordle-grid"></div>
+
+  <div class="keyboard" id="keyboard"></div>
+</div>
+
+<script>
+const WORD_LEN = {{ word_length }};
+const MAX_GUESSES = {{ max_guesses }};
+const LESSON_ID = {{ lesson.id }};
+let currentGuess = '';
+let rowIndex = 0;
+const grid = document.getElementById('wordleGrid');
+grid.style.gridTemplateRows = `repeat(${MAX_GUESSES}, 1fr)`;
+
+for (let r = 0; r < MAX_GUESSES; r++) {
+  const row = document.createElement('div');
+  row.className = 'wordle-row';
+  row.id = 'row-' + r;
+  for (let c = 0; c < WORD_LEN; c++) {
+    const cell = document.createElement('div');
+    cell.className = 'wordle-cell';
+    cell.id = `cell-${r}-${c}`;
+    row.appendChild(cell);
+  }
+  grid.appendChild(row);
+}
+
+const rows = [
+  'QWERTYUIOP'.split(''),
+  'ASDFGHJKL'.split(''),
+  ['ENTER', ...'ZXCVBNM'.split(''), 'DEL']
+];
+const kb = document.getElementById('keyboard');
+rows.forEach(r => {
+  const rowEl = document.createElement('div');
+  rowEl.className = 'kb-row';
+  r.forEach(k => {
+    const btn = document.createElement('button');
+    btn.className = 'kb-key' + (k.length > 1 ? ' wide' : '');
+    btn.textContent = k;
+    btn.id = 'key-' + k;
+    btn.onclick = () => handleKey(k);
+    rowEl.appendChild(btn);
+  });
+  kb.appendChild(rowEl);
+});
+
+function handleKey(k) {
+  if (rowIndex >= MAX_GUESSES) return;
+  if (k === 'DEL') {
+    currentGuess = currentGuess.slice(0, -1);
+  } else if (k === 'ENTER') {
+    if (currentGuess.length === WORD_LEN) submitGuess();
+    return;
+  } else if (currentGuess.length < WORD_LEN) {
+    currentGuess += k;
+  }
+  updateRow();
+}
+
+function updateRow() {
+  for (let c = 0; c < WORD_LEN; c++) {
+    const cell = document.getElementById(`cell-${rowIndex}-${c}`);
+    cell.textContent = currentGuess[c] || '';
+    cell.classList.toggle('filled', !!currentGuess[c]);
+  }
+}
+
+async function submitGuess() {
+  const res = await postJSON(`/play/wordle/${LESSON_ID}/guess/`, { guess: currentGuess });
+  if (res.error) return;
+  for (let c = 0; c < WORD_LEN; c++) {
+    const cell = document.getElementById(`cell-${rowIndex}-${c}`);
+    cell.classList.add(res.result[c]);
+    const key = document.getElementById('key-' + currentGuess[c].toUpperCase());
+    if (key && !key.classList.contains('correct')) {
+      key.classList.remove('present', 'absent');
+      key.classList.add(res.result[c]);
+    }
+  }
+  if (!res.solved) postJSON('/play/lose-life/', {});
+  rowIndex++;
+  currentGuess = '';
+  if (res.finished) {
+    const scorePct = res.solved ? Math.max(40, 100 - (rowIndex - 1) * 12) : 0;
+    setTimeout(() => lexeraFinishLesson(LESSON_ID, scorePct, "{% url 'core:dashboard' %}"), 700);
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Backspace') handleKey('DEL');
+  else if (e.key === 'Enter') handleKey('ENTER');
+  else if (/^[a-zA-Z]$/.test(e.key)) handleKey(e.key.toUpperCase());
+});
+</script>
+{% endblock %}

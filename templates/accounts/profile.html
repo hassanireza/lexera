@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="padding:24px 20px;text-align:center;">
+  <div class="avatar-circle" style="width:88px;height:88px;font-size:44px;margin:0 auto 10px;">{{ profile_user.avatar_emoji }}</div>
+  <h1 class="font-display" style="font-size:22px;margin:0;">{{ profile_user.display_name|default:profile_user.username }}
+    {% if profile_user.is_birthday_today %}<span title="Happy Birthday!">🎂</span>{% endif %}
+  </h1>
+  <div class="muted" style="font-size:14px;">@{{ profile_user.username }} · Level {{ profile_user.level_number }}</div>
+  {% if profile_user.bio %}<p style="margin-top:8px;font-size:14px;">{{ profile_user.bio }}</p>{% endif %}
+
+  <div style="display:flex;justify-content:center;gap:22px;margin:18px 0;">
+    <div><div style="font-weight:800;font-size:18px;">{{ profile_user.xp }}</div><div class="muted" style="font-size:12px;">XP</div></div>
+    <div><div style="font-weight:800;font-size:18px;">🔥 {{ profile_user.current_streak }}</div><div class="muted" style="font-size:12px;">Streak</div></div>
+    <div><div style="font-weight:800;font-size:18px;">{{ followers }}</div><div class="muted" style="font-size:12px;">Followers</div></div>
+    <div><div style="font-weight:800;font-size:18px;">{{ following }}</div><div class="muted" style="font-size:12px;">Following</div></div>
+  </div>
+
+  {% if user == profile_user %}
+    <a href="{% url 'accounts:edit_profile' %}" class="btn btn-outline" style="max-width:220px;margin:0 auto;">Edit profile</a>
+  {% else %}
+    <form method="post" action="{% url 'accounts:toggle_follow' username=profile_user.username %}">
+      {% csrf_token %}
+      <button class="btn {% if is_following %}btn-outline{% else %}btn-primary{% endif %}" style="max-width:220px;">
+        {% if is_following %}Following ✓{% else %}Follow{% endif %}
+      </button>
+    </form>
+  {% endif %}
+</div>
+
+<div style="padding:0 16px;">
+  <div class="section-title">Badges</div>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;">
+    {% for ub in earned_badges %}
+      <div class="card card-pad" style="text-align:center;width:88px;">
+        <div style="font-size:26px;">{{ ub.badge.icon }}</div>
+        <div style="font-size:11px;font-weight:700;margin-top:4px;">{{ ub.badge.name }}</div>
+      </div>
+    {% empty %}
+      <p class="muted" style="font-size:13px;">No badges yet — complete lessons to earn some!</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

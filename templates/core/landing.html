@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div style="padding:48px 24px 32px; text-align:center; background:radial-gradient(120% 80% at 50% 0%, var(--indigo-100), var(--paper) 70%);">
+  <img src="{% static 'img/logo.svg' %}" width="72" height="72" style="margin:0 auto 18px;border-radius:20px;box-shadow:var(--shadow-lg)">
+  <h1 class="font-display" style="font-size:34px;color:var(--ink-900);margin:0 0 8px;">Lexera</h1>
+  <p class="muted" style="font-size:16px;margin:0 0 28px;">Level up your words — bite-size vocabulary lessons, playful word games, and a streak worth keeping.</p>
+  <a href="{% url 'accounts:signup' %}" class="btn btn-primary btn-block" style="max-width:320px;margin:0 auto 12px;">Get started — it's free</a>
+  <a href="{% url 'accounts:login' %}" class="btn btn-outline btn-block" style="max-width:320px;margin:0 auto;">I already have an account</a>
+</div>
+
+<div style="padding:8px 20px 40px;display:flex;flex-direction:column;gap:14px;">
+  <div class="card card-pad" style="display:flex;gap:14px;align-items:flex-start;">
+    <span style="font-size:28px;">🧩</span>
+    <div><strong>6 game styles.</strong><div class="muted" style="font-size:14px;">Quizzes, typing recall, Wordle, word Sudoku, drag-and-drop matching and synonym connections.</div></div>
+  </div>
+  <div class="card card-pad" style="display:flex;gap:14px;align-items:flex-start;">
+    <span style="font-size:28px;">🔥</span>
+    <div><strong>Streaks & lives.</strong><div class="muted" style="font-size:14px;">Build a daily streak, protect it with streak freezes, and manage your lives like a real RPG.</div></div>
+  </div>
+  <div class="card card-pad" style="display:flex;gap:14px;align-items:flex-start;">
+    <span style="font-size:28px;">👥</span>
+    <div><strong>Play with friends.</strong><div class="muted" style="font-size:14px;">Follow friends, compare on the leaderboard, and challenge them to word duels.</div></div>
+  </div>
+  <div class="card card-pad" style="display:flex;gap:14px;align-items:flex-start;">
+    <span style="font-size:28px;">📜</span>
+    <div><strong>Word history.</strong><div class="muted" style="font-size:14px;">Every word comes with etymology, origin language and fun facts.</div></div>
+  </div>
+</div>
+{% endblock %}

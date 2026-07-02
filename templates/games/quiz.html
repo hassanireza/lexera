@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="game-screen">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <a href="{% url 'core:dashboard' %}" class="btn-ghost" style="font-size:22px;">✕</a>
+    <div class="xp-bar" style="flex:1;"><span id="progressBar" style="width:0%;background:linear-gradient(90deg,var(--mint-600),#0a8f68);"></span></div>
+  </div>
+
+  <div id="quizArea"></div>
+</div>
+
+<div id="feedbackBar" class="feedback-bar hide">
+  <div id="feedbackText" style="font-weight:800;font-size:16px;margin-bottom:10px;"></div>
+  <button id="nextBtn" class="btn btn-block" style="background:var(--ink-900);color:#fff;">Continue</button>
+</div>
+
+<script>
+const QUESTIONS = {{ questions_json|safe }};
+const LESSON_ID = {{ lesson.id }};
+let idx = 0, correctCount = 0, selected = null, answered = false;
+
+function render() {
+  const q = QUESTIONS[idx];
+  document.getElementById('progressBar').style.width = Math.round((idx / QUESTIONS.length) * 100) + '%';
+  const area = document.getElementById('quizArea');
+  area.innerHTML = `
+    <div class="section-title" style="margin-top:8px;">${q.prompt}</div>
+    <div id="choices" style="display:flex;flex-direction:column;gap:10px;"></div>`;
+  const choices = document.getElementById('choices');
+  q.choices.forEach((choice, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = choice;
+    btn.onclick = () => selectChoice(choice, btn);
+    choices.appendChild(btn);
+  });
+  answered = false;
+  document.getElementById('feedbackBar').classList.add('hide');
+}
+
+function selectChoice(choice, btn) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[idx];
+  const isCorrect = choice === q.answer;
+  document.querySelectorAll('.option-btn').forEach(b => {
+    if (b.textContent === q.answer) b.classList.add('correct');
+    else if (b === btn && !isCorrect) b.classList.add('incorrect');
+  });
+  const bar = document.getElementById('feedbackBar');
+  bar.className = 'feedback-bar ' + (isCorrect ? 'correct' : 'incorrect');
+  document.getElementById('feedbackText').textContent = isCorrect ? '✅ Nice! Correct.' : `❌ Correct answer: ${q.answer}`;
+  if (isCorrect) { correctCount++; } else { postJSON('/play/lose-life/', {}); }
+  setTimeout(() => bar.classList.remove('hide'), 50);
+}
+
+document.getElementById('nextBtn').onclick = () => {
+  idx++;
+  if (idx >= QUESTIONS.length) {
+    const scorePct = Math.round((correctCount / QUESTIONS.length) * 100);
+    lexeraFinishLesson(LESSON_ID, scorePct, "{% url 'core:dashboard' %}");
+    document.getElementById('quizArea').innerHTML = '';
+    document.getElementById('feedbackBar').classList.add('hide');
+  } else {
+    render();
+  }
+};
+
+render();
+</script>
+{% endblock %}

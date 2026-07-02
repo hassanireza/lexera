@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card card-pad" style="margin:14px 16px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+    <span style="font-weight:800;font-size:14px;">Daily goal</span>
+    <span class="muted" style="font-size:13px;">{{ xp_into }} / {{ user.daily_goal_xp }} XP</span>
+  </div>
+  <div class="xp-bar"><span style="width:{{ daily_progress }}%"></span></div>
+</div>
+
+{% if word_of_day %}
+<a href="{% url 'games:word_history' word_id=word_of_day.word.id %}" class="card card-pad" style="margin:0 16px 14px;display:block;background:linear-gradient(135deg,var(--indigo-600),var(--indigo-500));color:#fff;">
+  <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.85;">✨ Word of the day</div>
+  <div class="font-display" style="font-size:22px;margin:4px 0 2px;">{{ word_of_day.word.text }}</div>
+  <div style="font-size:13px;opacity:.9;">{{ word_of_day.word.definition }}</div>
+</a>
+{% endif %}
+
+{% for block in level_blocks %}
+<div class="level-banner" style="background:{{ block.level.color }};">
+  <div style="font-size:26px;">{{ block.level.icon }}</div>
+  <div class="font-display" style="font-size:20px;">{{ block.level.name }}</div>
+  <div style="font-size:13px;opacity:.9;">{{ block.level.subtitle }}</div>
+</div>
+<div class="path-wrap">
+  {% for item in block.lessons %}
+    {% cycle '' 'path-offset-right' 'path-offset-left' as offset silent %}
+    <div style="position:relative;" class="{{ offset }}">
+      {% if item.status == 'locked' %}
+      <div class="path-node locked" title="{{ item.lesson.title }}">🔒</div>
+      {% else %}
+      <a href="{% url 'games:play_lesson' lesson_id=item.lesson.id %}" class="path-node {{ item.status }}" title="{{ item.lesson.title }}">
+        {{ item.lesson.icon }}
+        {% if item.status == 'completed' %}<span class="path-stars">{% for s in item.stars_range %}⭐{% endfor %}</span>{% endif %}
+      </a>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endfor %}
+
+<div style="height:24px;"></div>
+{% endblock %}

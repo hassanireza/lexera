@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="padding:16px;">
+  <h1 class="font-display" style="font-size:22px;margin-bottom:12px;">🏆 Leaderboard</h1>
+  <div style="display:flex;gap:8px;margin-bottom:14px;">
+    <a href="?scope=friends" class="btn {% if scope == 'friends' %}btn-primary{% else %}btn-outline{% endif %}" style="flex:1;padding:10px;">Friends</a>
+    <a href="?scope=global" class="btn {% if scope == 'global' %}btn-primary{% else %}btn-outline{% endif %}" style="flex:1;padding:10px;">Global</a>
+  </div>
+</div>
+<div class="card" style="margin:0 16px 20px;overflow:hidden;">
+  {% for rank, u in ranked %}
+  <div class="leader-row" style="{% if u == user %}background:var(--indigo-100);{% endif %}">
+    <div class="leader-rank {% if rank == 1 %}top1{% elif rank == 2 %}top2{% elif rank == 3 %}top3{% endif %}">{{ rank }}</div>
+    <div class="avatar-circle">{{ u.avatar_emoji }}</div>
+    <a href="{% url 'accounts:profile' username=u.username %}" style="flex:1;font-weight:700;">{{ u.display_name|default:u.username }}</a>
+    <div style="font-weight:800;color:var(--indigo-600);">{{ u.xp }} XP</div>
+  </div>
+  {% empty %}
+  <p class="muted" style="padding:16px;">No players yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

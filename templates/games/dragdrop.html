@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="game-screen">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <a href="{% url 'core:dashboard' %}" class="btn-ghost" style="font-size:22px;">✕</a>
+    <div class="xp-bar" style="flex:1;"><span id="progressBar" style="width:0%;background:linear-gradient(90deg,var(--mint-600),#0a8f68);"></span></div>
+  </div>
+  <div class="section-title">Drag each word onto its definition</div>
+
+  <div id="chipTray" style="display:flex;flex-wrap:wrap;gap:8px;min-height:52px;"></div>
+
+  <div id="dropZones" class="dnd-col"></div>
+
+  <button id="checkBtn" class="btn btn-primary btn-block" style="margin-top:6px;">Check answers</button>
+</div>
+
+<script>
+const ITEMS = {{ items_json|safe }};
+const LESSON_ID = {{ lesson.id }};
+const shuffledWords = [...ITEMS].sort(() => Math.random() - 0.5);
+const placements = {}; // definitionIndex -> word
+
+const tray = document.getElementById('chipTray');
+const zones = document.getElementById('dropZones');
+
+shuffledWords.forEach((it, i) => {
+  const chip = document.createElement('div');
+  chip.className = 'dnd-chip';
+  chip.textContent = it.word;
+  chip.draggable = true;
+  chip.dataset.word = it.word;
+  chip.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', it.word));
+  // touch support
+  let dragEl = null;
+  chip.addEventListener('touchstart', e => {
+    dragEl = chip;
+    chip.style.opacity = '0.5';
+  }, {passive:true});
+  chip.addEventListener('touchend', e => {
+    const touch = e.changedTouches[0];
+    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+    const zone = target ? target.closest('.dnd-drop') : null;
+    if (zone) placeWord(zone, it.word, chip);
+    chip.style.opacity = '1';
+  });
+  tray.appendChild(chip);
+});
+
+const shuffledDefs = [...ITEMS].sort(() => Math.random() - 0.5);
+shuffledDefs.forEach((it, i) => {
+  const zone = document.createElement('div');
+  zone.className = 'dnd-drop';
+  zone.dataset.definition = it.definition;
+  zone.dataset.correctWord = it.word;
+  zone.innerHTML = `<span style="flex:1;">${it.definition}</span>`;
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('over');
+    const word = e.dataTransfer.getData('text/plain');
+    const chip = tray.querySelector(`.dnd-chip[data-word="${CSS.escape(word)}"]`);
+    if (chip) placeWord(zone, word, chip);
+  });
+  zones.appendChild(zone);
+});
+
+function placeWord(zone, word, chip) {
+  if (zone.dataset.placedWord) return; // already filled
+  zone.dataset.placedWord = word;
+  placements[zone.dataset.definition] = word;
+  const badge = document.createElement('span');
+  badge.textContent = word;
+  badge.style.cssText = 'font-weight:800;background:var(--indigo-100);color:var(--indigo-600);padding:6px 10px;border-radius:8px;';
+  zone.prepend(badge);
+  chip.remove();
+}
+
+document.getElementById('checkBtn').onclick = () => {
+  let correct = 0;
+  document.querySelectorAll('.dnd-drop').forEach(zone => {
+    const placed = zone.dataset.placedWord;
+    if (placed && placed === zone.dataset.correctWord) {
+      zone.classList.add('correct');
+      correct++;
+    } else if (placed) {
+      zone.classList.add('incorrect');
+      postJSON('/play/lose-life/', {});
+    } else {
+      zone.classList.add('incorrect');
+    }
+  });
+  const scorePct = Math.round((correct / ITEMS.length) * 100);
+  setTimeout(() => lexeraFinishLesson(LESSON_ID, scorePct, "{% url 'core:dashboard' %}"), 900);
+  document.getElementById('checkBtn').disabled = true;
+};
+</script>
+{% endblock %}

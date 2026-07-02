@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="padding:16px;">
+  <a href="javascript:history.back()" class="btn-ghost" style="font-size:22px;">←</a>
+  <div class="card card-pad" style="margin-top:10px;">
+    <div class="font-display" style="font-size:28px;color:var(--indigo-600);">{{ word.text }}</div>
+    <div class="muted" style="margin-bottom:10px;">{{ word.pronunciation_ipa }} · {{ word.get_part_of_speech_display }} · {{ word.get_difficulty_display }}</div>
+    <p><strong>Meaning</strong><br>{{ word.definition }}</p>
+    {% if word.example_sentence %}<p><strong>Example</strong><br><em>“{{ word.example_sentence }}”</em></p>{% endif %}
+    {% if word.origin_language %}<p><strong>Origin</strong><br>{{ word.origin_language }}{% if word.first_known_use %} — first known use {{ word.first_known_use }}{% endif %}</p>{% endif %}
+    {% if word.etymology %}<p><strong>History of the word</strong><br>{{ word.etymology }}</p>{% endif %}
+    {% if word.fun_fact %}<p style="background:var(--amber-100);padding:10px;border-radius:10px;">✨ {{ word.fun_fact }}</p>{% endif %}
+    {% if related %}
+    <p><strong>Synonyms</strong></p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      {% for r in related %}<a href="{% url 'games:word_history' word_id=r.id %}" class="stat-chip">{{ r.text }}</a>{% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

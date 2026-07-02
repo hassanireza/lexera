@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="game-screen">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <a href="{% url 'core:dashboard' %}" class="btn-ghost" style="font-size:22px;">✕</a>
+    <div class="section-title" style="margin:0;flex:1;text-align:center;">Word History</div>
+    <div style="width:22px;"></div>
+  </div>
+
+  {% for word in words %}
+  <div class="card card-pad">
+    <div class="font-display" style="font-size:22px;color:var(--indigo-600);">{{ word.text }}</div>
+    <div class="muted" style="font-size:13px;margin-bottom:8px;">{{ word.pronunciation_ipa }} · {{ word.get_part_of_speech_display }}</div>
+    <p style="font-size:14px;"><strong>Meaning:</strong> {{ word.definition }}</p>
+    {% if word.origin_language %}<p style="font-size:14px;"><strong>Origin:</strong> {{ word.origin_language }}{% if word.first_known_use %} · first known use {{ word.first_known_use }}{% endif %}</p>{% endif %}
+    {% if word.etymology %}<p style="font-size:14px;"><strong>Story:</strong> {{ word.etymology }}</p>{% endif %}
+    {% if word.fun_fact %}<p style="font-size:13px;background:var(--amber-100);padding:10px;border-radius:10px;">✨ {{ word.fun_fact }}</p>{% endif %}
+  </div>
+  {% endfor %}
+
+  <button id="doneBtn" class="btn btn-primary btn-block">I've learned these words</button>
+</div>
+
+<script>
+document.getElementById('doneBtn').onclick = () => {
+  lexeraFinishLesson({{ lesson.id }}, 100, "{% url 'core:dashboard' %}");
+};
+</script>
+{% endblock %}

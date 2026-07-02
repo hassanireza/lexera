@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="game-screen">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <a href="{% url 'core:dashboard' %}" class="btn-ghost" style="font-size:22px;">✕</a>
+    <div class="xp-bar" style="flex:1;"><span id="progressBar" style="width:0%;background:linear-gradient(90deg,var(--mint-600),#0a8f68);"></span></div>
+  </div>
+  <div id="quizArea"></div>
+</div>
+
+<div id="feedbackBar" class="feedback-bar hide">
+  <div id="feedbackText" style="font-weight:800;font-size:16px;margin-bottom:10px;"></div>
+  <button id="nextBtn" class="btn btn-block" style="background:var(--ink-900);color:#fff;">Continue</button>
+</div>
+
+<script>
+const QUESTIONS = {{ questions_json|safe }};
+const LESSON_ID = {{ lesson.id }};
+let idx = 0, correctCount = 0, answered = false;
+
+function render() {
+  const q = QUESTIONS[idx];
+  document.getElementById('progressBar').style.width = Math.round((idx / QUESTIONS.length) * 100) + '%';
+  const area = document.getElementById('quizArea');
+  area.innerHTML = `
+    <div class="section-title" style="margin-top:8px;">Type the word for:</div>
+    <div class="card card-pad" style="font-size:16px;">"${q.prompt}"</div>
+    <div class="muted" style="font-size:13px;margin-top:6px;">Hint: ${q.hint}</div>
+    <input id="typedAnswer" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+      style="margin-top:14px;width:100%;padding:16px;border-radius:14px;border:2px solid var(--ink-100);font-size:18px;font-weight:700;text-align:center;">
+    <button id="checkBtn" class="btn btn-primary btn-block" style="margin-top:14px;">Check</button>`;
+  answered = false;
+  document.getElementById('feedbackBar').classList.add('hide');
+  const input = document.getElementById('typedAnswer');
+  input.focus();
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') checkAnswer(); });
+  document.getElementById('checkBtn').onclick = checkAnswer;
+}
+
+function checkAnswer() {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[idx];
+  const val = document.getElementById('typedAnswer').value.trim().toLowerCase();
+  const isCorrect = val === q.answer;
+  const bar = document.getElementById('feedbackBar');
+  bar.className = 'feedback-bar ' + (isCorrect ? 'correct' : 'incorrect');
+  document.getElementById('feedbackText').textContent = isCorrect ? '✅ Correct!' : `❌ Correct answer: ${q.answer}`;
+  if (isCorrect) { correctCount++; } else { postJSON('/play/lose-life/', {}); }
+  document.getElementById('typedAnswer').disabled = true;
+  document.getElementById('checkBtn').disabled = true;
+  setTimeout(() => bar.classList.remove('hide'), 50);
+}
+
+document.getElementById('nextBtn').onclick = () => {
+  idx++;
+  if (idx >= QUESTIONS.length) {
+    const scorePct = Math.round((correctCount / QUESTIONS.length) * 100);
+    lexeraFinishLesson(LESSON_ID, scorePct, "{% url 'core:dashboard' %}");
+    document.getElementById('quizArea').innerHTML = '';
+    document.getElementById('feedbackBar').classList.add('hide');
+  } else {
+    render();
+  }
+};
+
+render();
+</script>
+{% endblock %}

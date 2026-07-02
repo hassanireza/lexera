@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="game-screen">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <a href="{% url 'core:dashboard' %}" class="btn-ghost" style="font-size:22px;">✕</a>
+    <div class="xp-bar" style="flex:1;"><span id="progressBar" style="width:0%;background:linear-gradient(90deg,var(--mint-600),#0a8f68);"></span></div>
+  </div>
+  <div class="section-title">Connect each word with its match</div>
+
+  <div class="connections-wrap">
+    <svg id="lineSvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;"></svg>
+    <div style="display:flex;justify-content:space-between;gap:16px;position:relative;z-index:2;">
+      <div id="leftCol" style="display:flex;flex-direction:column;gap:10px;flex:1;"></div>
+      <div id="rightCol" style="display:flex;flex-direction:column;gap:10px;flex:1;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PAIRS = {{ pairs_json|safe }};
+const LEFT = {{ left_json|safe }};
+const RIGHT = {{ right_json|safe }};
+const LESSON_ID = {{ lesson.id }};
+
+const matchMap = {};
+PAIRS.forEach(p => matchMap[p.left] = p.right);
+
+let selectedLeft = null, selectedRight = null, matched = 0, mistakes = 0;
+const leftCol = document.getElementById('leftCol');
+const rightCol = document.getElementById('rightCol');
+const svg = document.getElementById('lineSvg');
+
+LEFT.forEach(text => {
+  const el = document.createElement('div');
+  el.className = 'conn-node';
+  el.textContent = text;
+  el.dataset.value = text;
+  el.dataset.side = 'left';
+  el.onclick = () => selectNode(el);
+  leftCol.appendChild(el);
+});
+RIGHT.forEach(text => {
+  const el = document.createElement('div');
+  el.className = 'conn-node';
+  el.textContent = text;
+  el.dataset.value = text;
+  el.dataset.side = 'right';
+  el.onclick = () => selectNode(el);
+  rightCol.appendChild(el);
+});
+
+function selectNode(el) {
+  if (el.classList.contains('matched')) return;
+  if (el.dataset.side === 'left') {
+    document.querySelectorAll('.conn-node[data-side=left]').forEach(n => n.classList.remove('selected'));
+    selectedLeft = el; el.classList.add('selected');
+  } else {
+    document.querySelectorAll('.conn-node[data-side=right]').forEach(n => n.classList.remove('selected'));
+    selectedRight = el; el.classList.add('selected');
+  }
+  if (selectedLeft && selectedRight) tryMatch();
+}
+
+function tryMatch() {
+  const l = selectedLeft, r = selectedRight;
+  if (matchMap[l.dataset.value] === r.dataset.value) {
+    l.classList.remove('selected'); r.classList.remove('selected');
+    l.classList.add('matched'); r.classList.add('matched');
+    drawLine(l, r, true);
+    matched++;
+    document.getElementById('progressBar').style.width = Math.round((matched / PAIRS.length) * 100) + '%';
+    if (matched === PAIRS.length) {
+      const scorePct = Math.max(20, 100 - mistakes * 15);
+      setTimeout(() => lexeraFinishLesson(LESSON_ID, scorePct, "{% url 'core:dashboard' %}"), 500);
+    }
+  } else {
+    mistakes++;
+    l.classList.add('wrong'); r.classList.add('wrong');
+    postJSON('/play/lose-life/', {});
+    setTimeout(() => { l.classList.remove('selected','wrong'); r.classList.remove('selected','wrong'); }, 400);
+  }
+  selectedLeft = null; selectedRight = null;
+}
+
+function drawLine(a, b, permanent) {
+  const wrap = document.querySelector('.connections-wrap').getBoundingClientRect();
+  const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+  const x1 = ra.right - wrap.left, y1 = ra.top + ra.height/2 - wrap.top;
+  const x2 = rb.left - wrap.left, y2 = rb.top + rb.height/2 - wrap.top;
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+  line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+  line.setAttribute('stroke', '#12B886'); line.setAttribute('stroke-width', '3'); line.setAttribute('stroke-linecap', 'round');
+  svg.appendChild(line);
+}
+</script>
+{% endblock %}
