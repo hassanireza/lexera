@@ -1,0 +1,54 @@
+<svg width="900" height="520" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#A8A2C4"/>
+    </marker>
+  </defs>
+  <rect width="900" height="520" rx="24" fill="#FAF9FF"/>
+
+  <text x="450" y="46" text-anchor="middle" font-size="20" font-weight="800" fill="#1B1730">The Lexera Loop</text>
+  <text x="450" y="70" text-anchor="middle" font-size="13" fill="#635C82">Every session feeds the next one</text>
+
+  <!-- circular arrows -->
+  <path d="M450,120 A210,210 0 0 1 660,330" fill="none" stroke="#A8A2C4" stroke-width="2" marker-end="url(#arrow2)"/>
+  <path d="M660,330 A210,210 0 0 1 450,430" fill="none" stroke="#A8A2C4" stroke-width="2" marker-end="url(#arrow2)"/>
+  <path d="M450,430 A210,210 0 0 1 240,330" fill="none" stroke="#A8A2C4" stroke-width="2" marker-end="url(#arrow2)"/>
+  <path d="M240,330 A210,210 0 0 1 450,120" fill="none" stroke="#A8A2C4" stroke-width="2" marker-end="url(#arrow2)"/>
+
+  <!-- Node 1: Play a lesson -->
+  <g>
+    <circle cx="450" cy="110" r="70" fill="#4F46E5"/>
+    <text x="450" y="102" text-anchor="middle" font-size="26">🎮</text>
+    <text x="450" y="124" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">Play a lesson</text>
+  </g>
+
+  <!-- Node 2: Earn XP + coins -->
+  <g>
+    <circle cx="700" cy="330" r="70" fill="#F5A623"/>
+    <text x="700" y="322" text-anchor="middle" font-size="26">⭐</text>
+    <text x="700" y="344" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">Earn XP &amp; coins</text>
+  </g>
+
+  <!-- Node 3: Streak grows -->
+  <g>
+    <circle cx="450" cy="440" r="70" fill="#FF6B52"/>
+    <text x="450" y="432" text-anchor="middle" font-size="26">🔥</text>
+    <text x="450" y="454" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">Streak grows</text>
+  </g>
+
+  <!-- Node 4: Spend in store -->
+  <g>
+    <circle cx="200" cy="330" r="70" fill="#12B886"/>
+    <text x="200" y="322" text-anchor="middle" font-size="26">🛍️</text>
+    <text x="200" y="344" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">Spend in the store</text>
+  </g>
+
+  <!-- side annotations -->
+  <text x="770" y="240" font-size="12" fill="#635C82">+XP, +coins, stars,</text>
+  <text x="770" y="256" font-size="12" fill="#635C82">double-XP boosts stack</text>
+
+  <text x="450" y="500" text-anchor="middle" font-size="12" fill="#635C82">Streak freezes protect a missed day and keep the loop alive</text>
+
+  <text x="80" y="240" font-size="12" fill="#635C82">Lives refill, freezes buy</text>
+  <text x="80" y="256" font-size="12" fill="#635C82">back-in security</text>
+</svg>

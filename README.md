@@ -1,92 +1,169 @@
-# Lexera — Level up your words 🦊
+<div align="center">
 
-A gamified English vocabulary learning app built with **Django**, vanilla **JavaScript**, and a
-custom mobile-first design system. Inspired by best practices from Duolingo (streaks, lives,
-path-based lessons), Headspace (soft, calm shapes) and Linear (grid precision).
+<img src="docs/assets/banner.svg" alt="Lexera banner" width="100%">
 
-## What's inside
+<br>
 
-**Learning content**
-- 5 difficulty levels ("Roots" → "Summit"), 40 seeded lessons, 60+ curated words each with
-  IPA pronunciation, part of speech, definition, example sentence, **etymology / word history,
-  origin language, first known use and a fun fact**.
+[![Django](https://img.shields.io/badge/Django-6.0-4F46E5?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
+[![Python](https://img.shields.io/badge/Python-3.12-3730A5?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![PWA](https://img.shields.io/badge/PWA-ready-FF6B52?style=for-the-badge&logo=pwa&logoColor=white)](#-installable-as-a-real-app)
+[![Railway](https://img.shields.io/badge/Deploy-Railway-0B0D0E?style=for-the-badge&logo=railway&logoColor=white)](#-deploying-to-railway)
+[![License](https://img.shields.io/badge/License-MIT-12B886?style=for-the-badge)](#-license)
 
-**Game types (8)**
-| Type | File | Description |
-|---|---|---|
-| Quiz | `games/quiz.html` | Multiple-choice "what does X mean?" |
-| Typing recall | `games/typing.html` | Type the word from its definition |
-| Wordle | `games/wordle.html` | Classic 6-guess word game, server-validated |
-| Drag & drop | `games/dragdrop.html` | Match words to definitions (touch + mouse) |
-| Synonym connections | `games/connections.html` | Tap-to-connect matching with SVG lines |
-| Word Sudoku | `games/sudoku.html` | 9×9 sudoku using letters instead of digits |
-| Word history | `games/history.html` | Etymology reading cards |
-| Level test | `games/quiz.html` | Bigger quiz, higher pass bar |
+**A gamified English vocabulary app that makes learning words feel like a game worth returning to.**
 
-**Gamification**
-- XP & levelling curve, coins, **lives** (regenerate over time, lose one per mistake)
-- **Daily streaks** with streak-freeze protection (purchasable)
-- Boosts (Double XP), a coin **store**, badges
-- Birthday balloons on a player's profile on their birthday 🎈
+Built with Django, vanilla JavaScript and a fully custom design system. No template look-alikes, no filler.
 
-**Social**
-- Username/email auth (Django auth, custom `User` model)
-- Follow / unfollow, friends list, friend search
-- Leaderboard (friends & global)
-- `Challenge` model scaffolded for head-to-head duels
+</div>
 
-**Design / mobile app feel**
-- Full custom design system in `static/css/lexera.css` (`--indigo-600` primary,
-  `--coral-500` accent, `Baloo 2` display font + `Outfit` body font)
-- Bottom tab bar, sticky top stat bar — behaves like a native app
-- Installable **PWA**: `manifest.json`, service worker, offline page, custom icons
-- Fully responsive; centers as a phone-width column on desktop
+<br>
 
-## Deploying to Railway
+## Table of contents
 
-This repo is Railway-ready out of the box (`Procfile`, `railway.json`, `runtime.txt`,
-WhiteNoise for static files, Postgres support via `DATABASE_URL`).
+- [Why Lexera](#why-lexera)
+- [Feature overview](#feature-overview)
+- [The eight game types](#the-eight-game-types)
+- [The Lexera loop](#the-lexera-loop)
+- [System architecture](#system-architecture)
+- [Project layout](#project-layout)
+- [Getting started locally](#getting-started-locally)
+- [Deploying to Railway](#deploying-to-railway)
+- [Brand system](#brand-system)
+- [Roadmap to a public launch](#roadmap-to-a-public-launch)
+- [License](#license)
 
-1. **Push this folder to a GitHub repo** (or use the Railway CLI to deploy the folder
-   directly with `railway up`).
-2. In Railway: **New Project → Deploy from GitHub repo** and select it.
-3. **Add a PostgreSQL database**: New → Database → PostgreSQL. Railway automatically
-   injects `DATABASE_URL` into your web service — no extra config needed.
-4. **Set environment variables** on the web service (Settings → Variables):
-   - `SECRET_KEY` — generate one, e.g. `python -c "import secrets; print(secrets.token_urlsafe(50))"`
-   - `DEBUG` = `False`
-   - `ALLOWED_HOSTS` = `your-app.up.railway.app` (or your custom domain)
-   - `CSRF_TRUSTED_ORIGINS` = `https://your-app.up.railway.app`
-   - (Railway also exposes `RAILWAY_PUBLIC_DOMAIN` automatically, which `settings.py`
-     already reads to extend `ALLOWED_HOSTS`/`CSRF_TRUSTED_ORIGINS` as a fallback.)
-5. **Deploy.** Railway builds with Nixpacks from `requirements.txt`, then runs the
-   command in `Procfile` / `railway.json`, which on every deploy will:
-   - run migrations (`migrate --noinput`)
-   - seed/refresh vocabulary content (`seed_lexera` — idempotent, safe to re-run)
-   - collect static files (`collectstatic --noinput`, served by WhiteNoise)
-   - start `gunicorn`
-6. **Create an admin user** once it's live, via the Railway shell:
-   `railway run python manage.py createsuperuser`
-7. Visit your Railway URL — the landing page should load, and `/admin/` will let you
-   manage words, lessons, badges and store items.
+<br>
 
-**Custom domain:** add it under Settings → Networking, then add it to `ALLOWED_HOSTS`
-and `CSRF_TRUSTED_ORIGINS` too.
+## Why Lexera
 
-**Note:** the security hardening in `settings.py` (secure cookies, HSTS, SSL redirect)
-only activates when `DEBUG=False`, and assumes traffic reaches Django via Railway's
-HTTPS-terminating proxy (handled by `SECURE_PROXY_SSL_HEADER`). Testing those flags
-against `http://127.0.0.1` locally will trip CSRF/cookie checks — that's expected;
-run locally with `DEBUG=True` (the default in `.env.example` for local use).
+Most vocabulary apps are either a flashcard deck with a coat of paint, or a bloated platform
+that buries learning under menus. Lexera picks a narrower, sharper goal: turn a real English
+dictionary into a daily habit, using the mechanics that already work in the best consumer
+products on the market today.
 
-## Getting started
+Every word in the system carries more than a definition. It ships with pronunciation, part
+of speech, an example sentence, its origin language, first known use and a short story about
+where it came from. Language has history, and Lexera treats that history as content, not
+trivia.
+
+<br>
+
+## Feature overview
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### 🎯 Learning core
+- 5 difficulty levels, Roots through Summit
+- 40 seeded lessons, 60+ curated words
+- Full etymology on every word
+- Searchable in-app dictionary
+
+</td>
+<td width="33%" valign="top">
+
+### 🔥 Gamification
+- XP curve with rising thresholds
+- Daily streaks with freeze protection
+- Lives that regenerate over time
+- Coin economy and a real store
+
+</td>
+<td width="33%" valign="top">
+
+### 👥 Social
+- Follow and be followed
+- Friends and global leaderboards
+- Birthday balloons on profiles
+- Challenge model ready to extend
+
+</td>
+</tr>
+</table>
+
+<br>
+
+## The eight game types
+
+Lexera does not reuse one quiz format with a different skin. Each lesson type is a distinct
+mechanic, built to test recall in a different way.
+
+<img src="docs/assets/game-types.svg" alt="Eight Lexera game types" width="100%">
+
+| Type | What it tests | Server-validated |
+|---|---|:---:|
+| Quiz | Recognising a definition | Client-scored |
+| Typing recall | Producing the word from memory | Client-scored |
+| Wordle | Letter-level deduction | ✅ |
+| Word Sudoku | Logic under a vocabulary constraint | ✅ |
+| Drag and drop | Matching words to meaning | Client-scored |
+| Synonym links | Relating words to each other | Client-scored |
+| Word stories | Reading retention | Completion only |
+| Level test | Everything at once, higher bar | Client-scored |
+
+<br>
+
+## The Lexera loop
+
+Retention products live or die on their core loop. Lexera's is short on purpose: finish a
+lesson, get rewarded immediately, watch the streak grow, and have somewhere meaningful to
+spend what you earned.
+
+<img src="docs/assets/gameloop.svg" alt="The Lexera gamification loop" width="100%">
+
+A streak freeze, bought with coins, quietly protects a missed day so one bad Tuesday does not
+erase a month of consistency. That single mechanic is responsible for a meaningful share of
+long-term retention in every major habit app, and Lexera ships it from day one.
+
+<br>
+
+## System architecture
+
+<img src="docs/assets/architecture.svg" alt="Lexera system architecture" width="100%">
+
+The app is organised into six focused Django apps rather than one monolithic app. Each one
+owns a single responsibility, which keeps the models small and the admin panel readable.
+
+| App | Owns |
+|---|---|
+| `core` | Landing page, dashboard, PWA routes (manifest, service worker, offline page) |
+| `accounts` | Custom `User` model, auth, profile, store, life and streak logic |
+| `vocabulary` | `Word` and `WordOfDay` models, the `seed_lexera` content command |
+| `learning` | `Level`, `Lesson`, `LessonProgress`, the path shown on the dashboard |
+| `games` | Gameplay views and puzzle generation (`games/logic.py`) |
+| `gamification` | Boosts, badges, XP events, the passive life-regen middleware |
+| `social` | Follow graph and the challenge model |
+
+<br>
+
+## Project layout
+
+```text
+config/          settings, root urls, wsgi entrypoint
+core/            landing page, dashboard, PWA routes
+accounts/        custom User model, auth, profile, follow, leaderboard, store
+learning/        Level, Lesson, LessonProgress models
+vocabulary/      Word, WordOfDay models, seed_lexera management command
+games/           gameplay views and puzzle-generation logic
+social/          Follow, Challenge models
+gamification/    Boost, Badge, XPEvent, StoreItem, life-regen middleware
+static/css/      lexera.css, the entire design system in one file
+static/js/       app.js, shared confetti, balloons and API helpers
+templates/       one folder per app, matching the structure above
+docs/assets/     the diagrams used in this README
+```
+
+<br>
+
+## Getting started locally
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate        # venv\Scripts\activate on Windows
 pip install -r requirements.txt
 
-export DEBUG=True               # local dev only — set -Env:DEBUG="True" on Windows PowerShell
+export DEBUG=True               # local dev only
 python manage.py migrate
 python manage.py seed_lexera    # loads words, levels, lessons, store items, badges
 python manage.py createsuperuser
@@ -94,45 +171,98 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-Visit `http://127.0.0.1:8000/`. A demo account is not created automatically — sign up from
-the landing page, or create one via `createsuperuser` / the admin at `/admin/`.
+Open `http://127.0.0.1:8000/`. Sign up from the landing page, or manage content directly at
+`/admin/` with the superuser you just created.
 
-## Project layout
+<br>
 
-```
-config/          settings, root urls
-core/            landing page, dashboard (lesson path), PWA routes
-accounts/        custom User model, auth, profile, follow, leaderboard, store
-learning/        Level, Lesson, LessonProgress models
-vocabulary/      Word, WordOfDay models + seed_lexera management command
-games/           gameplay views + puzzle-generation logic (games/logic.py)
-social/          Follow, Challenge models
-gamification/    Boost, Badge, XPEvent, StoreItem, life-regen middleware
-static/css/lexera.css   full design system
-static/js/app.js        shared confetti / balloons / API helpers
-templates/       all HTML, one folder per app
-```
+## Deploying to Railway
 
-## Notes on production-readiness
+This repository is Railway-ready out of the box. `Procfile`, `railway.json` and `runtime.txt`
+are already in place, static files are served by WhiteNoise, and the database layer speaks
+Postgres the moment `DATABASE_URL` exists in the environment.
 
-This is a complete, runnable Django application with real working gameplay, persistence,
-and a genuinely designed UI — not a mockup. Before a public launch you'd still want to:
+1. Push this folder to a GitHub repository.
+2. In Railway, choose **New Project → Deploy from GitHub repo** and select it.
+3. Add a database: **New → Database → PostgreSQL**. Railway injects `DATABASE_URL` into the
+   web service automatically.
+4. Set these environment variables on the web service:
 
-- Swap SQLite for Postgres and set `DEBUG=False`, a real `SECRET_KEY`, and `ALLOWED_HOSTS`
-  via environment variables (the settings file already reads from `os.environ`).
-- Put it behind Gunicorn/Uvicorn + Nginx (or a PaaS) and serve static files via
-  `collectstatic` + whitenoise/S3/CDN.
-- Add rate limiting on the auth endpoints and the wordle/sudoku session endpoints.
-- Expand anti-cheat on the client-scored games (quiz/typing score the attempt client-side
-  then POST a summary — fine for a casual product, but a determined user could forge the
-  finish request; wordle/sudoku are already server-validated).
-- Add automated tests, CI, and error monitoring (Sentry).
-- Flesh out the `Challenge` (friend duel) flow with real-time updates and the badge-award
-  triggers (currently seeded but not yet auto-granted).
+   | Variable | Value |
+   |---|---|
+   | `SECRET_KEY` | a long random string, see `.env.example` for how to generate one |
+   | `DEBUG` | `False` |
+   | `ALLOWED_HOSTS` | `your-app.up.railway.app` |
+   | `CSRF_TRUSTED_ORIGINS` | `https://your-app.up.railway.app` |
 
-## Brand quick reference
+5. Deploy. The start command runs migrations, refreshes seed content, collects static files
+   and boots gunicorn, in that order, every time.
+6. Create your first admin account with `railway run python manage.py createsuperuser`.
 
-- **Primary**: Indigo `#4F46E5` · **Accent**: Coral `#FF6B52` · **Success**: Mint `#12B886`
-  · **Streak/Gold**: Amber `#F5A623`
-- **Display font**: Baloo 2 (rounded, playful headings) · **Body font**: Outfit
-- **Logo**: abstract "L" formed like an open book with a coral notch, in `static/img/logo.svg`
+Security hardening (secure cookies, HSTS, forced HTTPS redirect) switches on automatically
+whenever `DEBUG=False`, and is designed around Railway's HTTPS-terminating proxy through
+`SECURE_PROXY_SSL_HEADER`.
+
+<br>
+
+## Installable as a real app
+
+Lexera ships a manifest, a service worker and an offline fallback page. On a phone, "Add to
+Home Screen" produces a standalone icon with no browser chrome, a custom splash color, and a
+bottom tab bar that behaves like a native app rather than a website squeezed into a viewport.
+
+<br>
+
+## Brand system
+
+<table>
+<tr><td width="50%" valign="top">
+
+**Colour**
+
+| Role | Hex |
+|---|---|
+| Primary (Indigo) | `#4F46E5` |
+| Accent (Coral) | `#FF6B52` |
+| Success (Mint) | `#12B886` |
+| Streak (Amber) | `#F5A623` |
+| Ink (text) | `#1B1730` |
+
+</td><td width="50%" valign="top">
+
+**Type and mark**
+
+- Display font: **Baloo 2**, rounded and confident for headings
+- Body font: **Outfit**, clean and legible at small sizes
+- Logo: an abstract "L" shaped like an open book, with a coral
+  notch that doubles as a play marker
+- Full token set lives in `static/css/lexera.css`
+
+</td></tr>
+</table>
+
+<br>
+
+## Roadmap to a public launch
+
+Lexera runs end to end today: real auth, real gameplay, real persistence, a genuinely
+designed interface. Before opening it to the public, plan for the following.
+
+- [ ] Move rate limiting onto the auth and puzzle-session endpoints
+- [ ] Move quiz and typing scoring fully server-side to close the client-trust gap
+- [ ] Wire the `Challenge` model to a live friend-duel screen
+- [ ] Add automated badge-award triggers on streak and level milestones
+- [ ] Add a test suite and continuous integration
+- [ ] Connect error monitoring, for example Sentry
+
+<br>
+
+## License
+
+MIT. Build on it, fork it, ship it.
+
+<br>
+
+<div align="center">
+<sub>Made for people who would rather learn a word than scroll past one.</sub>
+</div>

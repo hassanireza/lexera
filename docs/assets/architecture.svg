@@ -1,0 +1,97 @@
+<svg width="1100" height="620" viewBox="0 0 1100 620" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#635C82"/>
+    </marker>
+    <style>
+      .box{fill:#FFFFFF;stroke:#E9E6F7;stroke-width:2;}
+      .boxhead{font-weight:800;font-size:16px;fill:#1B1730;}
+      .boxsub{font-weight:500;font-size:12px;fill:#635C82;}
+      .lane{font-weight:800;font-size:13px;fill:#635C82;letter-spacing:1px;}
+      .edge{stroke:#635C82;stroke-width:2;fill:none;marker-end:url(#arrow);}
+    </style>
+  </defs>
+
+  <rect width="1100" height="620" rx="24" fill="#FAF9FF"/>
+
+  <!-- Lane labels -->
+  <text x="40" y="40" class="lane">CLIENT</text>
+  <text x="40" y="180" class="lane">DJANGO APP</text>
+  <text x="40" y="460" class="lane">DATA &amp; INFRA</text>
+
+  <!-- Client layer -->
+  <rect x="40" y="55" width="230" height="90" rx="16" fill="#4F46E5"/>
+  <text x="60" y="90" font-weight="800" font-size="17" fill="#fff">Browser / Mobile PWA</text>
+  <text x="60" y="112" font-size="12" fill="#E5E3FD">HTML · CSS · Vanilla JS</text>
+  <text x="60" y="130" font-size="12" fill="#E5E3FD">Installable, offline shell</text>
+
+  <rect x="310" y="55" width="230" height="90" rx="16" fill="#FF6B52"/>
+  <text x="330" y="90" font-weight="800" font-size="17" fill="#fff">Game Engines</text>
+  <text x="330" y="112" font-size="12" fill="#FFE1D9">Quiz · Wordle · Sudoku</text>
+  <text x="330" y="130" font-size="12" fill="#FFE1D9">Drag-drop · Connections</text>
+
+  <!-- App layer boxes -->
+  <g>
+    <rect x="40" y="195" width="160" height="72" rx="14" class="box"/>
+    <text x="56" y="225" class="boxhead">core</text>
+    <text x="56" y="245" class="boxsub">dashboard, PWA routes</text>
+
+    <rect x="215" y="195" width="160" height="72" rx="14" class="box"/>
+    <text x="231" y="225" class="boxhead">accounts</text>
+    <text x="231" y="245" class="boxsub">auth, profile, store</text>
+
+    <rect x="390" y="195" width="160" height="72" rx="14" class="box"/>
+    <text x="406" y="225" class="boxhead">learning</text>
+    <text x="406" y="245" class="boxsub">levels, lessons</text>
+
+    <rect x="565" y="195" width="160" height="72" rx="14" class="box"/>
+    <text x="581" y="225" class="boxhead">vocabulary</text>
+    <text x="581" y="245" class="boxsub">words, etymology</text>
+
+    <rect x="740" y="195" width="160" height="72" rx="14" class="box"/>
+    <text x="756" y="225" class="boxhead">games</text>
+    <text x="756" y="245" class="boxsub">puzzle logic, sessions</text>
+
+    <rect x="915" y="195" width="150" height="72" rx="14" class="box"/>
+    <text x="931" y="225" class="boxhead">gamification</text>
+    <text x="931" y="245" class="boxsub">XP, lives, badges</text>
+  </g>
+
+  <rect x="40" y="290" width="1025" height="72" rx="14" fill="#E5E3FD" stroke="#C9C4F5" stroke-width="2"/>
+  <text x="60" y="320" class="boxhead">social</text>
+  <text x="60" y="340" class="boxsub">follow graph · leaderboard · challenges (shared across every app above)</text>
+
+  <!-- Middleware note -->
+  <rect x="40" y="380" width="1025" height="50" rx="12" fill="#FFF2D6" stroke="#F5A623" stroke-width="1.5"/>
+  <text x="60" y="410" font-size="13" font-weight="700" fill="#8a5c00">DailyRefreshMiddleware regenerates lives on every authenticated request, no cron job required.</text>
+
+  <!-- Data layer -->
+  <rect x="40" y="470" width="230" height="90" rx="16" fill="#12B886"/>
+  <text x="60" y="505" font-weight="800" font-size="17" fill="#fff">PostgreSQL</text>
+  <text x="60" y="527" font-size="12" fill="#D6F8EC">via DATABASE_URL</text>
+  <text x="60" y="545" font-size="12" fill="#D6F8EC">SQLite fallback locally</text>
+
+  <rect x="310" y="470" width="230" height="90" rx="16" fill="#2D9CDB"/>
+  <text x="330" y="505" font-weight="800" font-size="17" fill="#fff">WhiteNoise</text>
+  <text x="330" y="527" font-size="12" fill="#DCF1FF">Hashed, compressed static</text>
+  <text x="330" y="545" font-size="12" fill="#DCF1FF">assets, no CDN required</text>
+
+  <rect x="580" y="470" width="230" height="90" rx="16" fill="#1B1730"/>
+  <text x="600" y="505" font-weight="800" font-size="17" fill="#fff">Gunicorn</text>
+  <text x="600" y="527" font-size="12" fill="#A8A2C4">WSGI app server</text>
+  <text x="600" y="545" font-size="12" fill="#A8A2C4">behind Railway's proxy</text>
+
+  <rect x="850" y="470" width="215" height="90" rx="16" fill="#F0553D"/>
+  <text x="870" y="505" font-weight="800" font-size="17" fill="#fff">Railway</text>
+  <text x="870" y="527" font-size="12" fill="#FFE1D9">Build, deploy, TLS,</text>
+  <text x="870" y="545" font-size="12" fill="#FFE1D9">env vars, logs</text>
+
+  <!-- edges -->
+  <path class="edge" d="M155,145 L155,195"/>
+  <path class="edge" d="M425,145 L300,195"/>
+  <path class="edge" d="M540,240 L740,240"/>
+  <path class="edge" d="M155,362 L155,470"/>
+  <path class="edge" d="M425,362 L425,470"/>
+  <path class="edge" d="M695,362 L695,470"/>
+  <path class="edge" d="M810,515 L850,515"/>
+</svg>

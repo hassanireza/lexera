@@ -1,0 +1,75 @@
+<svg width="1100" height="300" viewBox="0 0 1100 300" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <rect width="1100" height="300" rx="24" fill="#FAF9FF"/>
+  <defs>
+    <style>
+      .tile{fill:#FFFFFF;stroke:#E9E6F7;stroke-width:2;}
+      .name{font-weight:800;font-size:14px;fill:#1B1730;}
+      .desc{font-size:11px;fill:#635C82;}
+    </style>
+  </defs>
+
+  <!-- Row of 4 tiles x 2 rows -->
+  <g>
+    <rect x="30" y="30" width="240" height="110" rx="16" class="tile"/>
+    <text x="52" y="70" font-size="30">🧠</text>
+    <text x="100" y="66" class="name">Quiz</text>
+    <text x="100" y="86" class="desc">Multiple choice meaning</text>
+    <text x="100" y="102" class="desc">check, instant feedback</text>
+  </g>
+
+  <g>
+    <rect x="290" y="30" width="240" height="110" rx="16" class="tile"/>
+    <text x="312" y="70" font-size="30">⌨️</text>
+    <text x="360" y="66" class="name">Typing Recall</text>
+    <text x="360" y="86" class="desc">Read the definition,</text>
+    <text x="360" y="102" class="desc">type the exact word</text>
+  </g>
+
+  <g>
+    <rect x="550" y="30" width="240" height="110" rx="16" class="tile"/>
+    <text x="572" y="70" font-size="30">🟩</text>
+    <text x="620" y="66" class="name">Wordle</text>
+    <text x="620" y="86" class="desc">Six guesses, server-side</text>
+    <text x="620" y="102" class="desc">validated feedback</text>
+  </g>
+
+  <g>
+    <rect x="810" y="30" width="260" height="110" rx="16" class="tile"/>
+    <text x="832" y="70" font-size="30">🔢</text>
+    <text x="880" y="66" class="name">Word Sudoku</text>
+    <text x="880" y="86" class="desc">Classic 9×9 logic, letters</text>
+    <text x="880" y="102" class="desc">instead of digits</text>
+  </g>
+
+  <g>
+    <rect x="30" y="160" width="240" height="110" rx="16" class="tile"/>
+    <text x="52" y="200" font-size="30">🧲</text>
+    <text x="100" y="196" class="name">Drag &amp; Drop</text>
+    <text x="100" y="216" class="desc">Match words to their</text>
+    <text x="100" y="232" class="desc">definitions, touch-ready</text>
+  </g>
+
+  <g>
+    <rect x="290" y="160" width="240" height="110" rx="16" class="tile"/>
+    <text x="312" y="200" font-size="30">🔗</text>
+    <text x="360" y="196" class="name">Synonym Links</text>
+    <text x="360" y="216" class="desc">Tap-to-connect pairs</text>
+    <text x="360" y="232" class="desc">with live SVG lines</text>
+  </g>
+
+  <g>
+    <rect x="550" y="160" width="240" height="110" rx="16" class="tile"/>
+    <text x="572" y="200" font-size="30">📜</text>
+    <text x="620" y="196" class="name">Word Stories</text>
+    <text x="620" y="216" class="desc">Etymology, origin and</text>
+    <text x="620" y="232" class="desc">fun facts per word</text>
+  </g>
+
+  <g>
+    <rect x="810" y="160" width="260" height="110" rx="16" class="tile"/>
+    <text x="832" y="200" font-size="30">🏁</text>
+    <text x="880" y="196" class="name">Level Test</text>
+    <text x="880" y="216" class="desc">Bigger question pool,</text>
+    <text x="880" y="232" class="desc">higher pass bar</text>
+  </g>
+</svg>

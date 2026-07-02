@@ -1,0 +1,52 @@
+<svg width="1280" height="320" viewBox="0 0 1280 320" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#3730A5"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6C63F1"/>
+      <stop offset="100%" stop-color="#4F46E5"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="85%" cy="10%" r="70%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="320" rx="28" fill="url(#bg)"/>
+  <rect width="1280" height="320" rx="28" fill="url(#glow)"/>
+
+  <!-- floating decorative dots -->
+  <circle cx="1140" cy="60" r="5" fill="#FF6B52" opacity="0.9"/>
+  <circle cx="1180" cy="120" r="3" fill="#F5A623" opacity="0.8"/>
+  <circle cx="1080" cy="240" r="4" fill="#12B886" opacity="0.8"/>
+  <circle cx="1210" cy="200" r="6" fill="#ffffff" opacity="0.25"/>
+  <circle cx="90" cy="250" r="4" fill="#ffffff" opacity="0.2"/>
+
+  <!-- logo mark -->
+  <g transform="translate(80,100)">
+    <rect width="120" height="120" rx="32" fill="url(#mark)"/>
+    <path d="M37 26 h15 v45 h30 v15 H37 a7.5 7.5 0 0 1 -7.5 -7.5 V33.5 a7.5 7.5 0 0 1 7.5 -7.5 z" fill="#FAF9FF"/>
+    <circle cx="86" cy="34" r="9.5" fill="#FF6B52"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="235" y="165" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="72" font-weight="800" fill="#FFFFFF" letter-spacing="-1">Lexera</text>
+  <text x="238" y="205" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="500" fill="#E5E3FD">Level up your words.</text>
+
+  <!-- feature chips -->
+  <g font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" font-weight="700">
+    <rect x="238" y="230" width="150" height="38" rx="19" fill="#ffffff" opacity="0.12"/>
+    <text x="258" y="254" fill="#ffffff">🔥 Streaks</text>
+
+    <rect x="398" y="230" width="150" height="38" rx="19" fill="#ffffff" opacity="0.12"/>
+    <text x="418" y="254" fill="#ffffff">🧩 8 Games</text>
+
+    <rect x="558" y="230" width="170" height="38" rx="19" fill="#ffffff" opacity="0.12"/>
+    <text x="578" y="254" fill="#ffffff">👥 Social</text>
+
+    <rect x="738" y="230" width="170" height="38" rx="19" fill="#ffffff" opacity="0.12"/>
+    <text x="758" y="254" fill="#ffffff">📱 PWA-ready</text>
+  </g>
+</svg>
