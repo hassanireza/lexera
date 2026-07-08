@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/banner.svg" alt="Lexera banner" width="100%">
+<img src="docs/assets/lexeraBanner.webp" alt="Lexera banner" width="100%">
 
 <br>
 <br>
