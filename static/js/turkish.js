@@ -745,52 +745,75 @@ let lessonState = {
 
 /* ===== HOME SCREEN ===== */
 function initTurkishHome() {
-  const lang = getTurkishCookie('tr_native_lang') || '';
-  if (lang) {
-    document.querySelectorAll('.tr-lang-btn').forEach(b => {
-      b.classList.toggle('selected', b.dataset.lang === lang);
-    });
-  }
+  // Restore saved language selection in the UI
+  const lang = getTurkishCookie('tr_native_lang') || 'en';
+  document.querySelectorAll('.tr-lang-btn').forEach(b => {
+    b.classList.toggle('selected', b.dataset.lang === lang);
+  });
 
-  // Show chapter map if already started
+  // Only auto-jump to map if user has actually completed at least one lesson
   const prog = loadProgress();
-  const hasStarted = Object.keys(prog).filter(k => !k.startsWith('_')).length > 0;
-  if (hasStarted && lang) {
+  const completedLessons = Object.keys(prog).filter(k => !k.startsWith('_') && prog[k].done);
+  if (completedLessons.length > 0) {
     showChapterMap();
+    return;
   }
 
-  // Set streak
+  // Set streak display
   const streak = prog._streak || 0;
   if (streak > 0) {
-    document.getElementById('trStreak').style.display = '';
-    document.getElementById('trStreakVal').textContent = streak;
+    const streakEl = document.getElementById('trStreak');
+    if (streakEl) streakEl.style.display = '';
+    const streakVal = document.getElementById('trStreakVal');
+    if (streakVal) streakVal.textContent = streak;
   }
 
-  // Cycle DYK facts
-  let dykIdx = Math.floor(Math.random() * DYK.length);
-  const dykEl = document.getElementById('didYouKnow');
-  if (dykEl) {
-    dykEl.textContent = DYK[dykIdx];
-    setInterval(() => {
-      dykIdx = (dykIdx + 1) % DYK.length;
-      dykEl.style.opacity = '0';
-      setTimeout(() => { dykEl.textContent = DYK[dykIdx]; dykEl.style.opacity = '1'; }, 300);
-    }, 8000);
-  }
+  // Rotate Did You Know facts (shown on map screen too)
+  initDYK();
 
   // Build skip grid
+  buildSkipGrid();
+}
+
+function initDYK() {
+  let dykIdx = Math.floor(Math.random() * DYK.length);
+  const dykEl = document.getElementById('didYouKnow');
+  if (!dykEl) return;
+  dykEl.textContent = DYK[dykIdx];
+  setInterval(() => {
+    dykIdx = (dykIdx + 1) % DYK.length;
+    dykEl.style.opacity = '0';
+    setTimeout(() => {
+      if (dykEl) { dykEl.textContent = DYK[dykIdx]; dykEl.style.opacity = '1'; }
+    }, 350);
+  }, 8000);
+}
+
+function buildSkipGrid() {
   const skipGrid = document.getElementById('skipGrid');
-  if (skipGrid) {
-    CHAPTER1_LESSONS.forEach((lesson, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'btn btn-outline';
-      btn.style.cssText = 'font-size:20px;padding:12px;border-radius:var(--r-md);';
-      btn.textContent = lesson.icon;
-      btn.title = lesson.title;
-      btn.onclick = () => { setTurkishCookie('tr_current_lesson', lesson.id, 365); closeSkipModal(); showChapterMap(); };
-      skipGrid.appendChild(btn);
-    });
-  }
+  if (!skipGrid) return;
+  skipGrid.innerHTML = '';
+  CHAPTER1_LESSONS.forEach((lesson) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-outline';
+    btn.style.cssText = 'font-size:22px;padding:12px;border-radius:var(--r-md);min-height:52px;';
+    btn.textContent = lesson.icon;
+    btn.title = lesson.title;
+    btn.onclick = () => {
+      // Mark all previous lessons as completed so the path unlocks correctly
+      const prog = loadProgress();
+      const idx = CHAPTER1_LESSONS.findIndex(l => l.id === lesson.id);
+      for (let i = 0; i < idx; i++) {
+        if (!prog[CHAPTER1_LESSONS[i].id]) {
+          prog[CHAPTER1_LESSONS[i].id] = { done: true, stars: 1, ts: Date.now(), skipped: true };
+        }
+      }
+      saveProgress(prog);
+      closeSkipModal();
+      showChapterMap();
+    };
+    skipGrid.appendChild(btn);
+  });
 }
 
 function selectLang(lang) {
@@ -801,15 +824,27 @@ function selectLang(lang) {
 }
 
 function startJourney() {
+  // Ensure language is saved (default to English if somehow not set)
   const lang = getTurkishCookie('tr_native_lang') || 'en';
-  if (!lang) { selectLang('en'); }
+  if (!getTurkishCookie('tr_native_lang')) {
+    setTurkishCookie('tr_native_lang', lang, 365);
+  }
   showChapterMap();
 }
 
 function showChapterMap() {
-  document.getElementById('screenLangSelect').style.display = 'none';
+  const langScreen = document.getElementById('screenLangSelect');
   const mapScreen = document.getElementById('screenChapterMap');
-  mapScreen.style.display = '';
+  if (langScreen) langScreen.style.display = 'none';
+  if (mapScreen) mapScreen.style.display = '';
+  // Show streak on map too
+  const prog = loadProgress();
+  const streak = prog._streak || 0;
+  const streakEl = document.getElementById('trStreak');
+  const streakVal = document.getElementById('trStreakVal');
+  if (streakEl) streakEl.style.display = streak > 0 ? '' : 'none';
+  if (streakVal) streakVal.textContent = streak;
+  initDYK();
   buildLessonPath();
   updateChapterProgress();
 }
@@ -823,27 +858,32 @@ function buildLessonPath() {
 
   CHAPTER1_LESSONS.forEach((lesson, i) => {
     const status = prog[lesson.id];
-    const prevDone = i === 0 || prog[CHAPTER1_LESSONS[i - 1].id];
-    const available = !status && prevDone;
+    // First lesson always available; subsequent only if previous is done
+    const prevDone = i === 0 || !!prog[CHAPTER1_LESSONS[i - 1].id];
     const completed = !!status;
+    const available = !completed && prevDone;
 
     const wrap = document.createElement('div');
     wrap.style.position = 'relative';
-    wrap.className = offsets[i % 3];
+    // Apply zigzag offset class
+    if (i % 3 === 1) wrap.className = 'path-offset-right';
+    else if (i % 3 === 2) wrap.className = 'path-offset-left';
 
+    // Use <a> for clickable, <div> for locked
     const node = document.createElement(available || completed ? 'a' : 'div');
     if (available || completed) {
       node.href = `/turkish/lesson/${lesson.id}/`;
+      node.style.textDecoration = 'none';
     }
 
-    let nodeClass = 'path-node ';
-    if (completed) nodeClass += 'tr-completed';
-    else if (available) nodeClass += 'tr-active';
-    else nodeClass += 'tr-locked';
-
-    node.className = nodeClass;
+    // Use base Lexera classes: available / completed / locked
+    node.className = 'path-node ' + (completed ? 'completed' : available ? 'available' : 'locked');
     node.title = lesson.title;
-    node.textContent = completed ? lesson.icon : available ? lesson.icon : '🔒';
+    node.innerHTML = completed
+      ? lesson.icon
+      : available
+        ? lesson.icon
+        : '<span style="font-size:22px;">🔒</span>';
 
     if (completed && status.stars) {
       const stars = document.createElement('span');
@@ -852,23 +892,24 @@ function buildLessonPath() {
       node.appendChild(stars);
     }
 
-    // Lesson info tooltip strip below
-    if (available) {
+    wrap.appendChild(node);
+
+    // Show label below active + completed nodes
+    if (available || completed) {
       const info = document.createElement('div');
-      info.style.cssText = 'text-align:center;margin-top:4px;';
-      info.innerHTML = `<div style="font-size:11px;font-weight:800;color:var(--tr-red);">${lesson.title}</div><div class="muted" style="font-size:10px;">${lesson.subtitle}</div>`;
-      wrap.appendChild(node);
+      info.style.cssText = 'text-align:center;margin-top:6px;max-width:80px;';
+      info.innerHTML = `
+        <div style="font-size:10px;font-weight:800;color:${completed ? 'var(--amber-600)' : 'var(--tr-red)'};line-height:1.3;">${lesson.title}</div>`;
       wrap.appendChild(info);
-    } else {
-      wrap.appendChild(node);
     }
+
     pathEl.appendChild(wrap);
   });
 }
 
 function updateChapterProgress() {
   const prog = loadProgress();
-  const done = CHAPTER1_LESSONS.filter(l => prog[l.id]).length;
+  const done = CHAPTER1_LESSONS.filter(l => prog[l.id] && !prog[l.id].skipped).length;
   const pct = Math.round((done / CHAPTER1_LESSONS.length) * 100);
   const fill = document.getElementById('chapterXpFill');
   const label = document.getElementById('chapterXpLabel');
@@ -876,9 +917,14 @@ function updateChapterProgress() {
   if (label) label.textContent = `${done} / ${CHAPTER1_LESSONS.length} lessons complete`;
 }
 
-function showSkipModal() { document.getElementById('skipModal').style.display = 'flex'; }
-function closeSkipModal() { document.getElementById('skipModal').style.display = 'none'; }
-
+function showSkipModal() {
+  const modal = document.getElementById('skipModal');
+  if (modal) { buildSkipGrid(); modal.style.display = 'flex'; }
+}
+function closeSkipModal() {
+  const modal = document.getElementById('skipModal');
+  if (modal) modal.style.display = 'none';
+}
 /* ===== LESSON PLAYER ===== */
 function initTurkishLesson(lessonId, nativeLang) {
   const lesson = CHAPTER1_LESSONS.find(l => l.id === lessonId);
