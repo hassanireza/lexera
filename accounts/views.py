@@ -105,7 +105,7 @@ def buy_item(request, key):
     item = get_object_or_404(StoreItem, key=key)
     user = request.user
     if user.coins < item.price_coins:
-        messages.error(request, "Not enough coins yet — keep learning to earn more!")
+        messages.error(request, "Not enough coins yet, keep learning to earn more!")
         return redirect('accounts:store')
     user.coins -= item.price_coins
     if item.key == 'streak_freeze':

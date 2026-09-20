@@ -58,7 +58,7 @@ def dashboard(request):
 
 def manifest(request):
     data = {
-        "name": "Lexera — Level up your words",
+        "name": "Lexera, Level up your words",
         "short_name": "Lexera",
         "description": "A gamified English vocabulary learning app.",
         "start_url": "/app/",

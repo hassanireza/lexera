@@ -29,7 +29,7 @@ LESSON_META = {
 
 
 def home(request):
-    """Turkish learning home — language select + chapter map."""
+    """Turkish learning home, language select + chapter map."""
     return render(request, 'turkish/home.html')
 
 

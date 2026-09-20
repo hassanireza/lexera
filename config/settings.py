@@ -91,7 +91,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # ---------------------------------------------------------------------------
-# Database — Postgres via DATABASE_URL (Railway sets this automatically when
+# Database, Postgres via DATABASE_URL (Railway sets this automatically when
 # you attach a Postgres plugin), falling back to local SQLite otherwise.
 # ---------------------------------------------------------------------------
 DATABASES = {
@@ -120,7 +120,7 @@ USE_I18N = True
 USE_TZ = True
 
 # ---------------------------------------------------------------------------
-# Static & media — WhiteNoise serves compressed, hashed static files directly
+# Static & media, WhiteNoise serves compressed, hashed static files directly
 # from the Django process, so Railway needs no separate static host.
 # ---------------------------------------------------------------------------
 STATIC_URL = '/static/'
@@ -143,7 +143,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ---------------------------------------------------------------------------
-# Security — tightened automatically whenever DEBUG is off (i.e. in prod).
+# Security, tightened automatically whenever DEBUG is off (i.e. in prod).
 # ---------------------------------------------------------------------------
 if not DEBUG:
     SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True').lower() == 'true'
@@ -157,7 +157,7 @@ if not DEBUG:
     X_FRAME_OPTIONS = 'DENY'
 
 # ---------------------------------------------------------------------------
-# Logging — plain stdout logging so Railway's log viewer captures everything.
+# Logging, plain stdout logging so Railway's log viewer captures everything.
 # ---------------------------------------------------------------------------
 LOGGING = {
     'version': 1,

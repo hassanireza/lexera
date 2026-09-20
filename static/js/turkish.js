@@ -1,5 +1,5 @@
 /**
- * LEXERA TURKISH — Front-end lesson engine
+ * LEXERA TURKISH, Front-end lesson engine
  * Chapter 1: First Steps in Turkish
  *
  * Teaching methodology:
@@ -8,7 +8,7 @@
  *  - Comprehensible input first: see/hear before produce
  *  - Immediate corrective feedback with the right answer always shown
  *  - Task-based learning: real scenarios (shop, cafe, bus) as context
- *  - Minimal grammar explanation — grammar through examples (inductive)
+ *  - Minimal grammar explanation, grammar through examples (inductive)
  *  - Cultural notes woven into content (not bolted on)
  *  - "Chunking": whole phrases before isolated words
  */
@@ -238,10 +238,10 @@ function n(key) {
 
 /* ===== DID YOU KNOW FACTS ===== */
 const DYK = [
-  'Turkish uses vowel harmony — vowels in a word all belong to the same "family" of sounds.',
+  'Turkish uses vowel harmony, vowels in a word all belong to the same "family" of sounds.',
   'Turkish is an agglutinative language: you build meaning by adding suffixes to root words.',
   'The Turkish alphabet was introduced in 1928, replacing the Ottoman Arabic script.',
-  'Turkish has no grammatical gender — there is no "he" or "she", only "o" for both.',
+  'Turkish has no grammatical gender, there is no "he" or "she", only "o" for both.',
   'About 80 million people speak Turkish as their first language.',
   'Turkish and English share some surprising loanwords: "yoghurt", "kiosk", and "turquoise" all come from Turkish.',
   'The verb always comes at the end of the sentence in Turkish: "I the apple ate."',
@@ -253,7 +253,7 @@ const DYK = [
 /* ===== CHAPTER 1 LESSON DEFINITIONS ===== */
 /*
   Learning arc for Chapter 1 (10 lessons):
-  L1: The Turkish Alphabet — sounds and unique letters
+  L1: The Turkish Alphabet, sounds and unique letters
   L2: Greetings & Basic Phrases
   L3: Numbers 1-10
   L4: Numbers 11-100 + Prices
@@ -395,13 +395,13 @@ const TR_ALPHABET = [
 
 function buildAlphabetLesson() {
   return [
-    { type: 'intro', icon: '🔤', title: 'The Turkish Alphabet', body: 'Turkish uses 29 letters — 8 unique ones you won\'t find in English. The great news: every letter makes exactly ONE sound. No surprises.' },
+    { type: 'intro', icon: '🔤', title: 'The Turkish Alphabet', body: 'Turkish uses 29 letters, 8 unique ones you won\'t find in English. The great news: every letter makes exactly ONE sound. No surprises.' },
     { type: 'alphabet-explore', title: 'Tap any letter to hear it', letters: TR_ALPHABET },
-    { type: 'tip', icon: '💡', text: 'The 8 special letters are highlighted in red: Ç, Ğ, I, İ, Ö, Ş, Ü — and they each have one consistent sound.' },
-    { type: 'mcq', prompt: 'What sound does "Ç" make?', choices: ['ch (as in cheese)', 'sh (as in shoe)', 's (as in see)', 'k (as in key)'], answer: 'ch (as in cheese)', explanation: 'Ç sounds like "ch" — think çay (chai tea).' },
-    { type: 'mcq', prompt: 'How do you pronounce "Ş"?', choices: ['sh (as in ship)', 'ss (as in hiss)', 'z (as in zero)', 'j (as in jam)'], answer: 'sh (as in ship)', explanation: 'Ş sounds like "sh" — think şeker (sugar).' },
+    { type: 'tip', icon: '💡', text: 'The 8 special letters are highlighted in red: Ç, Ğ, I, İ, Ö, Ş, Ü, and they each have one consistent sound.' },
+    { type: 'mcq', prompt: 'What sound does "Ç" make?', choices: ['ch (as in cheese)', 'sh (as in shoe)', 's (as in see)', 'k (as in key)'], answer: 'ch (as in cheese)', explanation: 'Ç sounds like "ch", think çay (chai tea).' },
+    { type: 'mcq', prompt: 'How do you pronounce "Ş"?', choices: ['sh (as in ship)', 'ss (as in hiss)', 'z (as in zero)', 'j (as in jam)'], answer: 'sh (as in ship)', explanation: 'Ş sounds like "sh", think şeker (sugar).' },
     { type: 'mcq', prompt: 'What is special about "Ğ" (yumuşak g)?', choices: ['It stretches the vowel before it', 'It sounds like "gh"', 'It is always silent', 'It sounds like "ng"'], answer: 'It stretches the vowel before it', explanation: 'Ğ (soft g) lengthens the vowel that precedes it. It never starts a word.' },
-    { type: 'mcq', prompt: 'Turkish has how many letters?', choices: ['29', '26', '32', '31'], answer: '29', explanation: 'Turkish has 29 letters — the standard Latin alphabet minus Q, W, X, plus Ç, Ğ, I, İ, Ö, Ş, Ü.' },
+    { type: 'mcq', prompt: 'Turkish has how many letters?', choices: ['29', '26', '32', '31'], answer: '29', explanation: 'Turkish has 29 letters, the standard Latin alphabet minus Q, W, X, plus Ç, Ğ, I, İ, Ö, Ş, Ü.' },
     { type: 'alphabet-explore', title: 'Review the unique letters one more time', letters: TR_ALPHABET.filter(l => l.unique) },
     { type: 'tip', icon: '🎯', text: 'Vowel harmony: Turkish vowels divide into two groups (front: e,i,ö,ü / back: a,ı,o,u). In most words, all vowels come from the same group.' },
   ];
@@ -429,8 +429,8 @@ function buildGreetingsLesson() {
     { tr: 'Anlamıyorum', en: "I don't understand", phonetic: 'an-la-MI-yo-rum', situation: 'When confused' },
   ];
   return [
-    { type: 'intro', icon: '👋', title: 'Greetings in Turkish', body: 'Turkish greetings are warm and context-specific. There are different goodbyes for the person leaving versus the person staying — a lovely cultural nuance.' },
-    { type: 'flip-cards', title: 'Learn the phrases — tap to flip', cards: phrases.slice(0, 6) },
+    { type: 'intro', icon: '👋', title: 'Greetings in Turkish', body: 'Turkish greetings are warm and context-specific. There are different goodbyes for the person leaving versus the person staying, a lovely cultural nuance.' },
+    { type: 'flip-cards', title: 'Learn the phrases, tap to flip', cards: phrases.slice(0, 6) },
     { type: 'mcq', prompt: 'You are leaving a shop. What do you say?', choices: ['Güle güle', 'Hoşça kal', 'Merhaba', 'İyi geceler'], answer: 'Hoşça kal', explanation: '"Hoşça kal" (stay well) is said by the person leaving. "Güle güle" (go smiling) is said by the one who stays.' },
     { type: 'mcq', prompt: 'It\'s 9 am. What greeting do you use?', choices: ['Günaydın', 'İyi akşamlar', 'İyi geceler', 'Hoşça kal'], answer: 'Günaydın', explanation: '"Günaydın" means good morning and is used until about noon.' },
     { type: 'flip-cards', title: 'More essential phrases', cards: phrases.slice(6, 12) },
@@ -445,7 +445,7 @@ function buildGreetingsLesson() {
     { type: 'flip-cards', title: 'Useful phrases when lost', cards: phrases.slice(12) },
     { type: 'mcq', prompt: 'How do you say "I don\'t understand"?', choices: ['Anlamıyorum', 'Bilmiyorum', 'İstiyorum', 'Gidiyorum'], answer: 'Anlamıyorum', explanation: '"Anlamıyorum" = I don\'t understand. The root is "anlamak" (to understand) + negative suffix -mıyor + I suffix -um.' },
     { type: 'mcq', prompt: 'Your friend thanks you. You reply:', choices: ['Rica ederim', 'Teşekkürler', 'Evet', 'Lütfen'], answer: 'Rica ederim', explanation: '"Rica ederim" is the standard polite reply to teşekkürler.' },
-    { type: 'tip', icon: '🌙', text: 'Cultural note: Turks often add "inşallah" (God willing) to future plans — it\'s not just religious, it\'s a social habit meaning "I hope so" or "fingers crossed".' },
+    { type: 'tip', icon: '🌙', text: 'Cultural note: Turks often add "inşallah" (God willing) to future plans, it\'s not just religious, it\'s a social habit meaning "I hope so" or "fingers crossed".' },
     { type: 'mcq', prompt: '"İyi akşamlar" means:', choices: ['Good evening', 'Good morning', 'Goodnight', 'See you tomorrow'], answer: 'Good evening', explanation: '"Akşam" = evening. "İyi" = good. So "İyi akşamlar" = good evenings.' },
   ];
 }
@@ -465,7 +465,7 @@ function buildNumbers1to10Lesson() {
     { n: 10, tr: 'on', phonetic: 'on' },
   ];
   return [
-    { type: 'intro', icon: '🔢', title: 'Numbers 0-10', body: 'Turkish numbers are completely regular once you learn the base words — no weird exceptions like eleven (on bir = "ten one").' },
+    { type: 'intro', icon: '🔢', title: 'Numbers 0-10', body: 'Turkish numbers are completely regular once you learn the base words, no weird exceptions like eleven (on bir = "ten one").' },
     { type: 'number-grid', numbers: nums, title: 'Tap each number to hear it' },
     { type: 'mcq', prompt: 'How do you say 3 in Turkish?', choices: ['üç', 'beş', 'dört', 'iki'], answer: 'üç', explanation: '"Üç" (üch) = three. Notice the special letter Ü and Ç.' },
     { type: 'mcq', prompt: 'What number is "yedi"?', choices: ['7', '8', '6', '9'], answer: '7', explanation: '"Yedi" = seven. Remember: ye-DI.' },
@@ -480,8 +480,8 @@ function buildNumbers1to10Lesson() {
     { type: 'mcq', prompt: 'How do you say 8?', choices: ['sekiz', 'altı', 'dokuz', 'yedi'], answer: 'sekiz', explanation: '"Sekiz" = eight. The "z" at the end is a giveaway once you know it.' },
     { type: 'mcq', prompt: '"Altı" means:', choices: ['6', '7', '4', '9'], answer: '6', explanation: '"Altı" = six. Altı sounds like "al-TI".' },
     { type: 'tip', icon: '💡', text: 'Turkish numbers above 10 are built by combining: on (10) + bir (1) = on bir (11). No irregulars to memorise!' },
-    { type: 'fill-blank', sentence: '_____ kere teşekkürler!', blank: 'Bin', translation: '_____ times thank you! (A thousand thanks!)', choices: ['Bin', 'On', 'Sıfır', 'Beş'], explanation: '"Bin kere teşekkürler" means "a thousand thanks!" — common phrase for deep gratitude.' },
-    { type: 'mcq', prompt: 'What is "dört"?', choices: ['4', '3', '5', '6'], answer: '4', explanation: '"Dört" = four. The ö sound is like in German "schön" — round your lips.' },
+    { type: 'fill-blank', sentence: '_____ kere teşekkürler!', blank: 'Bin', translation: '_____ times thank you! (A thousand thanks!)', choices: ['Bin', 'On', 'Sıfır', 'Beş'], explanation: '"Bin kere teşekkürler" means "a thousand thanks!", common phrase for deep gratitude.' },
+    { type: 'mcq', prompt: 'What is "dört"?', choices: ['4', '3', '5', '6'], answer: '4', explanation: '"Dört" = four. The ö sound is like in German "schön", round your lips.' },
   ];
 }
 
@@ -506,7 +506,7 @@ function buildNumbers11to100Lesson() {
     { type: 'mcq', prompt: 'How do you say 25 in Turkish?', choices: ['Yirmi beş', 'Yirmi dört', 'Otuz beş', 'On beş'], answer: 'Yirmi beş', explanation: 'Yirmi (20) + beş (5) = yirmi beş (25). That\'s it!' },
     { type: 'mcq', prompt: '"Kaç lira?" means:', choices: ['How many lira?', 'I want lira', 'Give me lira', 'A lot of lira'], answer: 'How many lira?', explanation: '"Kaç" = how many/much. "Kaç lira?" is the essential price question.' },
     { type: 'dialogue', location: '🛍️ Market stall', speakers: [
-      { name: 'Satıcı (Seller)', side: 'tr-speaker', tr: 'Buyurun!', en: 'Welcome! (lit. "Go ahead!" — a warm way to invite customers)', phonetic: 'buy-u-RUN' },
+      { name: 'Satıcı (Seller)', side: 'tr-speaker', tr: 'Buyurun!', en: 'Welcome! (lit. "Go ahead!", a warm way to invite customers)', phonetic: 'buy-u-RUN' },
       { name: 'Siz (You)', side: 'learner', tr: 'Bu kaç lira?', en: 'How much is this?', phonetic: 'bu KACH li-ra' },
       { name: 'Satıcı', side: 'tr-speaker', tr: 'Yirmi beş lira.', en: '25 lira.', phonetic: 'yir-mi besh li-ra' },
       { name: 'Siz', side: 'learner', tr: 'Tamam, alıyorum.', en: 'OK, I\'ll take it.', phonetic: 'ta-MAM a-li-YO-rum' },
@@ -521,14 +521,14 @@ function buildNumbers11to100Lesson() {
       { tr: 'kırk', en: '40' },
     ]},
     { type: 'mcq', prompt: 'How do you say "100 lira"?', choices: ['Yüz lira', 'Bin lira', 'Yirmi lira', 'Elli lira'], answer: 'Yüz lira', explanation: '"Yüz" = hundred. "Yüz lira" = 100 lira. "Bin" = thousand.' },
-    { type: 'tip', icon: '💳', text: '"Nakit mi, kart mı?" means "Cash or card?" — very useful phrase at any checkout in Turkey.' },
+    { type: 'tip', icon: '💳', text: '"Nakit mi, kart mı?" means "Cash or card?", very useful phrase at any checkout in Turkey.' },
   ];
 }
 
 function buildCafeLesson() {
   return [
     { type: 'intro', icon: '☕', title: 'At the Cafe', body: 'Cafe culture is huge in Turkey. From Turkish tea (çay) to strong Turkish coffee (kahve), knowing how to order is your first real-world skill.' },
-    { type: 'flip-cards', title: 'Cafe vocabulary — tap to flip', cards: [
+    { type: 'flip-cards', title: 'Cafe vocabulary, tap to flip', cards: [
       { tr: 'Çay', en: 'Tea (black, served in tulip glass)', phonetic: 'chay', situation: 'National drink of Turkey' },
       { tr: 'Türk kahvesi', en: 'Turkish coffee', phonetic: 'türk kah-ve-si', situation: 'Strong, served with grounds' },
       { tr: 'Su', en: 'Water', phonetic: 'su', situation: 'Always free at Turkish cafes' },
@@ -550,7 +550,7 @@ function buildCafeLesson() {
     { type: 'mcq', prompt: '"Bir Türk kahvesi, lütfen" means:', choices: ['One Turkish coffee, please', 'Two teas, please', 'Turkish tea, please', 'Coffee without sugar'], answer: 'One Turkish coffee, please', explanation: '"Bir" = one, "Türk kahvesi" = Turkish coffee, "lütfen" = please.' },
     { type: 'fill-blank', sentence: '_____, lütfen.', blank: 'Hesap', translation: '_____, please. (asking for the bill)', choices: ['Hesap', 'Garson', 'Menü', 'Su'], explanation: '"Hesap lütfen" is the phrase to call for the bill.' },
     { type: 'mcq', prompt: 'How is Turkish tea (çay) traditionally served?', choices: ['In a tulip-shaped glass', 'In a large mug', 'With milk', 'Iced'], answer: 'In a tulip-shaped glass', explanation: 'Turkish çay is served in small tulip-shaped (ince belli) glasses, often with two sugar cubes on the side.' },
-    { type: 'tip', icon: '🍵', text: 'Ordering Turkish coffee? You\'ll be asked "nasıl?" (how?) — meaning how sweet: sade (no sugar), az şekerli (little sugar), orta (medium), çok şekerli (very sweet).' },
+    { type: 'tip', icon: '🍵', text: 'Ordering Turkish coffee? You\'ll be asked "nasıl?" (how?), meaning how sweet: sade (no sugar), az şekerli (little sugar), orta (medium), çok şekerli (very sweet).' },
     { type: 'match-pairs', title: 'Cafe words', pairs: [
       { tr: 'Çay', en: 'Tea' },
       { tr: 'Hesap', en: 'The bill' },
@@ -638,13 +638,13 @@ function buildTransportLesson() {
       { tr: 'Yakın', en: 'Near' },
       { tr: 'Metro', en: 'Subway' },
     ]},
-    { type: 'tip', icon: '🚇', text: 'In Istanbul, the Istanbulkart is a rechargeable smart card that works on all metro, tram, bus and ferry lines — much cheaper than single tickets.' },
+    { type: 'tip', icon: '🚇', text: 'In Istanbul, the Istanbulkart is a rechargeable smart card that works on all metro, tram, bus and ferry lines, much cheaper than single tickets.' },
   ];
 }
 
 function buildIntroLesson() {
   return [
-    { type: 'intro', icon: '🤝', title: 'Meeting People', body: 'Turks are famously warm and hospitable. Knowing how to introduce yourself and ask a few questions will immediately open doors — and probably invitations to tea.' },
+    { type: 'intro', icon: '🤝', title: 'Meeting People', body: 'Turks are famously warm and hospitable. Knowing how to introduce yourself and ask a few questions will immediately open doors, and probably invitations to tea.' },
     { type: 'flip-cards', title: 'Introductions', cards: [
       { tr: 'Adım...', en: 'My name is...', phonetic: 'a-DIM', situation: 'Lit. "My name is..."' },
       { tr: 'Adınız ne?', en: 'What is your name? (formal)', phonetic: 'a-di-NIZ ne', situation: 'Formal, to strangers' },
@@ -680,14 +680,14 @@ function buildIntroLesson() {
 
 function buildReviewLesson() {
   return [
-    { type: 'intro', icon: '🧩', title: 'Chapter 1 Review', body: 'Time to test everything you have learned. Mix of vocab, dialogues and real-world situations. No new content — just checking what stuck.' },
-    { type: 'mcq', prompt: 'You enter a shop. The seller says "Buyurun!" — what does this mean?', choices: ['Welcome / Go ahead!', 'Too expensive!', 'Come back later', 'We are closed'], answer: 'Welcome / Go ahead!', explanation: '"Buyurun" is a warm, versatile word used to welcome customers, hand something over, or invite someone to speak.' },
+    { type: 'intro', icon: '🧩', title: 'Chapter 1 Review', body: 'Time to test everything you have learned. Mix of vocab, dialogues and real-world situations. No new content, just checking what stuck.' },
+    { type: 'mcq', prompt: 'You enter a shop. The seller says "Buyurun!", what does this mean?', choices: ['Welcome / Go ahead!', 'Too expensive!', 'Come back later', 'We are closed'], answer: 'Welcome / Go ahead!', explanation: '"Buyurun" is a warm, versatile word used to welcome customers, hand something over, or invite someone to speak.' },
     { type: 'mcq', prompt: 'How do you say "I want two teas, please"?', choices: ['İki çay, lütfen', 'Bir çay, lütfen', 'İki kahve, lütfen', 'Üç çay, lütfen'], answer: 'İki çay, lütfen', explanation: 'İki (2) + çay (tea) + lütfen (please) = "İki çay, lütfen".' },
     { type: 'mcq', prompt: '"Sola dön, sonra düz git" means:', choices: ['Turn left, then go straight', 'Turn right, then stop', 'Go straight, then turn left', 'Stop, then turn left'], answer: 'Turn left, then go straight', explanation: 'Sol = left, dön = turn, sonra = then, düz git = go straight.' },
-    { type: 'mcq', prompt: 'What are the 8 special Turkish letters?', choices: ['Ç, Ğ, I, İ, Ö, Ş, Ü + one more', 'C, G, I, J, O, S, U, V', 'Ç, Ğ, I, İ, Ö, Ş, Ü, Y', 'Q, W, X plus 5 others'], answer: 'Ç, Ğ, I, İ, Ö, Ş, Ü + one more', explanation: 'The 8 unique Turkish letters are Ç, Ğ, I (dotless), İ (dotted), Ö, Ş, Ü — Q, W and X are not in Turkish.' },
-    { type: 'mcq', prompt: '"Hesap, lütfen" — when would you say this?', choices: ['At the end of a meal', 'Entering a shop', 'Boarding a bus', 'Meeting someone'], answer: 'At the end of a meal', explanation: '"Hesap" = bill. You ask for the hesap when you want to pay and leave.' },
+    { type: 'mcq', prompt: 'What are the 8 special Turkish letters?', choices: ['Ç, Ğ, I, İ, Ö, Ş, Ü + one more', 'C, G, I, J, O, S, U, V', 'Ç, Ğ, I, İ, Ö, Ş, Ü, Y', 'Q, W, X plus 5 others'], answer: 'Ç, Ğ, I, İ, Ö, Ş, Ü + one more', explanation: 'The 8 unique Turkish letters are Ç, Ğ, I (dotless), İ (dotted), Ö, Ş, Ü, Q, W and X are not in Turkish.' },
+    { type: 'mcq', prompt: '"Hesap, lütfen", when would you say this?', choices: ['At the end of a meal', 'Entering a shop', 'Boarding a bus', 'Meeting someone'], answer: 'At the end of a meal', explanation: '"Hesap" = bill. You ask for the hesap when you want to pay and leave.' },
     { type: 'mcq', prompt: 'How do you say 75 in Turkish?', choices: ['Yetmiş beş', 'Yetmiş dört', 'Seksen beş', 'Altmış beş'], answer: 'Yetmiş beş', explanation: 'Yetmiş (70) + beş (5) = yetmiş beş (75).' },
-    { type: 'match-pairs', title: 'Final review — match them up', pairs: [
+    { type: 'match-pairs', title: 'Final review, match them up', pairs: [
       { tr: 'Çay', en: 'Tea' },
       { tr: 'Durak', en: 'Stop' },
       { tr: 'İndirim', en: 'Discount' },
@@ -703,7 +703,7 @@ function buildReviewLesson() {
 
 function buildFinalScenarioLesson() {
   return [
-    { type: 'intro', icon: '🏆', title: 'Your First Conversation', body: 'This is it — a full real-world shopping scenario, from entering the shop to paying and leaving. Everything you have learned comes together here.' },
+    { type: 'intro', icon: '🏆', title: 'Your First Conversation', body: 'This is it, a full real-world shopping scenario, from entering the shop to paying and leaving. Everything you have learned comes together here.' },
     { type: 'dialogue', location: '🛍️ Grand Bazaar, Istanbul', speakers: [
       { name: 'Satıcı', side: 'tr-speaker', tr: 'Buyurun, hoş geldiniz!', en: 'Welcome, glad you came!', phonetic: 'buy-u-run, hosh gel-di-niz' },
       { name: 'Siz', side: 'learner', tr: 'Merhaba! Bu çanta kaç lira?', en: 'Hello! How much is this bag?', phonetic: 'mer-ha-ba! bu chan-ta kach li-ra' },
@@ -716,9 +716,9 @@ function buildFinalScenarioLesson() {
       { name: 'Satıcı', side: 'tr-speaker', tr: 'Tabii ki! Buyurun, iyi günler!', en: 'Of course! Here you go, have a good day!', phonetic: 'ta-bi-i ki! buy-u-run, i-yi gün-ler' },
       { name: 'Siz', side: 'learner', tr: 'Teşekkürler, iyi günler!', en: 'Thank you, have a good day!', phonetic: 'te-shek-kür-ler, i-yi gün-ler' },
     ]},
-    { type: 'mcq', prompt: 'In the scenario: "iki yüz yirmi lira, son fiyat" — "son fiyat" means:', choices: ['Final price', 'Good price', 'New price', 'Special price'], answer: 'Final price', explanation: '"Son" = last/final, "fiyat" = price. Sellers say "son fiyat" to signal no more negotiation.' },
+    { type: 'mcq', prompt: 'In the scenario: "iki yüz yirmi lira, son fiyat", "son fiyat" means:', choices: ['Final price', 'Good price', 'New price', 'Special price'], answer: 'Final price', explanation: '"Son" = last/final, "fiyat" = price. Sellers say "son fiyat" to signal no more negotiation.' },
     { type: 'fill-blank', sentence: 'Fiş _____ miyim?', blank: 'alabilir', translation: 'Can I have a receipt?', choices: ['alabilir', 'istiyorum', 'var', 'lütfen'], explanation: '"Alabilir miyim?" = Can I take/have? A very useful polite request structure.' },
-    { type: 'mcq', prompt: 'The seller said "Hoş geldiniz!" — this means:', choices: ["Welcome! / Glad you came!", 'What do you want?', 'Come back later', 'Good morning'], answer: "Welcome! / Glad you came!", explanation: '"Hoş geldiniz" (lit. "You came nicely") is the formal welcoming phrase. You reply "Hoş bulduk" (We found it nice).' },
+    { type: 'mcq', prompt: 'The seller said "Hoş geldiniz!", this means:', choices: ["Welcome! / Glad you came!", 'What do you want?', 'Come back later', 'Good morning'], answer: "Welcome! / Glad you came!", explanation: '"Hoş geldiniz" (lit. "You came nicely") is the formal welcoming phrase. You reply "Hoş bulduk" (We found it nice).' },
     { type: 'mcq', prompt: 'How do you say "250 lira" in Turkish?', choices: ['İki yüz elli lira', 'İki yüz beş lira', 'Yirmi beş lira', 'İki yüz on beş lira'], answer: 'İki yüz elli lira', explanation: 'İki (2) + yüz (hundred) + elli (fifty) = 250. Pattern: [multiplier][hundred][tens][ones].' },
     { type: 'match-pairs', title: 'Chapter 1 mastery check', pairs: [
       { tr: 'İndirim var mı?', en: 'Is there a discount?' },

@@ -19,7 +19,7 @@ class Word(models.Model):
     example_sentence = models.CharField(max_length=300, blank=True)
     difficulty = models.PositiveSmallIntegerField(choices=DIFFICULTY_CHOICES, default=1)
     etymology = models.TextField(blank=True, help_text="History / origin of the word")
-    origin_language = models.CharField(max_length=60, blank=True)
+    origin_language = models.CharField(max_length=120, blank=True)
     first_known_use = models.CharField(max_length=60, blank=True)
     fun_fact = models.CharField(max_length=300, blank=True)
     synonyms = models.ManyToManyField('self', blank=True, symmetrical=True)

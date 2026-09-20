@@ -6,7 +6,7 @@
     <div class="section-title" style="margin:0;flex:1;text-align:center;">Word Sudoku</div>
     <div style="width:22px;"></div>
   </div>
-  <p class="muted" style="text-align:center;font-size:13px;">Fill the grid using only the letters of <strong>{{ bank_word }}</strong> — each letter appears once per row, column and 3×3 box.</p>
+  <p class="muted" style="text-align:center;font-size:13px;">Fill the grid using only the letters of <strong>{{ bank_word }}</strong>, each letter appears once per row, column and 3×3 box.</p>
 
   <div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;">
     {% for l in letters %}<span class="stat-chip" style="min-width:28px;justify-content:center;">{{ l }}</span>{% endfor %}
@@ -70,7 +70,7 @@ document.getElementById('checkBtn').onclick = async () => {
     setTimeout(() => lexeraFinishLesson(LESSON_ID, scorePct, "{% url 'core:dashboard' %}"), 500);
   } else {
     mistakesMade++;
-    document.getElementById('statusText').textContent = `Not quite — ${res.errors.length} cell(s) need fixing.`;
+    document.getElementById('statusText').textContent = `Not quite, ${res.errors.length} cell(s) need fixing.`;
     if (mistakesMade >= 2) postJSON('/play/lose-life/', {});
   }
 };
