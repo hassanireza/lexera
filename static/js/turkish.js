@@ -61,7 +61,7 @@ function speakTurkish(text) {
 }
 
 /* ===== TRANSLATIONS (for native-language labels) ===== */
-const T = {
+var T = {
   en: {
     tapToFlip: 'Tap to reveal English',
     listenAndChoose: 'Listen and choose',
@@ -189,7 +189,7 @@ function t(key) {
 }
 
 /* ===== NATIVE-LANGUAGE TRANSLATIONS FOR CONTENT ===== */
-const NATIVE = {
+var NATIVE = {
   en: {
     hello: 'Hello', goodbye: 'Goodbye', goodMorning: 'Good morning',
     goodEvening: 'Good evening', howAreYou: 'How are you?',
@@ -237,7 +237,7 @@ function n(key) {
 }
 
 /* ===== DID YOU KNOW FACTS ===== */
-const DYK = [
+var DYK = [
   'Turkish uses vowel harmony, vowels in a word all belong to the same "family" of sounds.',
   'Turkish is an agglutinative language: you build meaning by adding suffixes to root words.',
   'The Turkish alphabet was introduced in 1928, replacing the Ottoman Arabic script.',
@@ -251,7 +251,7 @@ const DYK = [
 ];
 
 /* ===== ALPHABET ===== */
-const TR_ALPHABET = [
+var TR_ALPHABET = [
   {l:'A',sound:'ah',ex:'araba (car)'},
   {l:'B',sound:'b',ex:'bardak (glass)'},
   {l:'C',sound:'j (as in jam)',ex:'cami (mosque)'},
@@ -639,7 +639,7 @@ function buildFinalScenarioLesson() {
   L10: Your First Conversation (full shop scenario)
 */
 
-const CHAPTER1_LESSONS = [
+var CHAPTER1_LESSONS = [
   {
     id: 'tr-c1-l1',
     title: 'The Turkish Alphabet',
@@ -733,7 +733,7 @@ const CHAPTER1_LESSONS = [
 ];
 
 /* ===== LESSON ENGINE STATE ===== */
-let lessonState = {
+var lessonState = {
   lessonId: null,
   steps: [],
   currentStep: 0,

@@ -76,13 +76,37 @@ def manifest(request):
 
 def service_worker(request):
     js = """
-const CACHE = 'lexera-v1';
-self.addEventListener('install', e => { self.skipWaiting(); });
-self.addEventListener('activate', e => { self.clients.claim(); });
+const CACHE = 'lexera-v3';
+const STATIC_ASSETS = ['/offline/'];
+
+self.addEventListener('install', e => {
+  self.skipWaiting();
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(STATIC_ASSETS)));
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
+  );
+});
+
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+  const url = new URL(e.request.url);
+  // Never cache hashed static files from service worker - let browser cache handle them
+  if (url.pathname.startsWith('/static/')) return;
+  // Never cache API or admin
+  if (url.pathname.startsWith('/admin/') || url.pathname.startsWith('/api/')) return;
   e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request).then(r => r || caches.match('/offline/')))
+    fetch(e.request)
+      .catch(() => caches.match(e.request)
+        .then(r => r || new Response('Offline - please reconnect', {
+          status: 503,
+          headers: { 'Content-Type': 'text/plain' }
+        }))
+      )
   );
 });
 """
