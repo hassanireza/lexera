@@ -250,114 +250,6 @@ const DYK = [
   'The word "tulip" comes from the Turkish word "tülbend" (turban), for the flower\'s shape.',
 ];
 
-/* ===== CHAPTER 1 LESSON DEFINITIONS ===== */
-/*
-  Learning arc for Chapter 1 (10 lessons):
-  L1: The Turkish Alphabet, sounds and unique letters
-  L2: Greetings & Basic Phrases
-  L3: Numbers 1-10
-  L4: Numbers 11-100 + Prices
-  L5: At the Cafe (menu vocab + ordering)
-  L6: At the Shop (asking price, sizes, payment)
-  L7: Getting Around (transport + directions)
-  L8: Meeting People (introductions + small talk)
-  L9: Putting It Together (review quiz)
-  L10: Your First Conversation (full shop scenario)
-*/
-
-const CHAPTER1_LESSONS = [
-  {
-    id: 'tr-c1-l1',
-    title: 'The Turkish Alphabet',
-    subtitle: 'Sounds & special letters',
-    icon: '🔤',
-    type: 'vocab',
-    xp: 15,
-    steps: buildAlphabetLesson(),
-  },
-  {
-    id: 'tr-c1-l2',
-    title: 'Greetings',
-    subtitle: 'Hello, goodbye & politeness',
-    icon: '👋',
-    type: 'vocab',
-    xp: 12,
-    steps: buildGreetingsLesson(),
-  },
-  {
-    id: 'tr-c1-l3',
-    title: 'Numbers 1-10',
-    subtitle: 'Counting from one to ten',
-    icon: '🔢',
-    type: 'vocab',
-    xp: 12,
-    steps: buildNumbers1to10Lesson(),
-  },
-  {
-    id: 'tr-c1-l4',
-    title: 'Numbers & Prices',
-    subtitle: '11 to 100, asking the price',
-    icon: '💰',
-    type: 'vocab',
-    xp: 15,
-    steps: buildNumbers11to100Lesson(),
-  },
-  {
-    id: 'tr-c1-l5',
-    title: 'At the Cafe',
-    subtitle: 'Order drinks and food',
-    icon: '☕',
-    type: 'dialogue',
-    xp: 18,
-    steps: buildCafeLesson(),
-  },
-  {
-    id: 'tr-c1-l6',
-    title: 'At the Shop',
-    subtitle: 'Ask prices and buy things',
-    icon: '🛍️',
-    type: 'dialogue',
-    xp: 18,
-    steps: buildShopLesson(),
-  },
-  {
-    id: 'tr-c1-l7',
-    title: 'Getting Around',
-    subtitle: 'Buses, directions, transport',
-    icon: '🚌',
-    type: 'dialogue',
-    xp: 18,
-    steps: buildTransportLesson(),
-  },
-  {
-    id: 'tr-c1-l8',
-    title: 'Meeting People',
-    subtitle: 'Introductions & small talk',
-    icon: '🤝',
-    type: 'dialogue',
-    xp: 15,
-    steps: buildIntroLesson(),
-  },
-  {
-    id: 'tr-c1-l9',
-    title: 'Chapter Review',
-    subtitle: 'Test what you have learned',
-    icon: '🧩',
-    type: 'grammar',
-    xp: 20,
-    steps: buildReviewLesson(),
-  },
-  {
-    id: 'tr-c1-l10',
-    title: 'Your First Conversation',
-    subtitle: 'A full shopping scenario',
-    icon: '🏆',
-    type: 'dialogue',
-    xp: 25,
-    steps: buildFinalScenarioLesson(),
-  },
-];
-
 /* ===== ALPHABET ===== */
 const TR_ALPHABET = [
   {l:'A',sound:'ah',ex:'araba (car)'},
@@ -731,6 +623,114 @@ function buildFinalScenarioLesson() {
     { type: 'tip', icon: '🌟', text: 'Tebrikler! (Congratulations!) You have completed Chapter 1. You can now greet people, count and handle prices, order at cafes, shop at markets, ask for directions, and introduce yourself. That is real Turkish!' },
   ];
 }
+
+/* ===== CHAPTER 1 LESSON DEFINITIONS ===== */
+/*
+  Learning arc for Chapter 1 (10 lessons):
+  L1: The Turkish Alphabet, sounds and unique letters
+  L2: Greetings & Basic Phrases
+  L3: Numbers 1-10
+  L4: Numbers 11-100 + Prices
+  L5: At the Cafe (menu vocab + ordering)
+  L6: At the Shop (asking price, sizes, payment)
+  L7: Getting Around (transport + directions)
+  L8: Meeting People (introductions + small talk)
+  L9: Putting It Together (review quiz)
+  L10: Your First Conversation (full shop scenario)
+*/
+
+const CHAPTER1_LESSONS = [
+  {
+    id: 'tr-c1-l1',
+    title: 'The Turkish Alphabet',
+    subtitle: 'Sounds & special letters',
+    icon: '🔤',
+    type: 'vocab',
+    xp: 15,
+    steps: buildAlphabetLesson(),
+  },
+  {
+    id: 'tr-c1-l2',
+    title: 'Greetings',
+    subtitle: 'Hello, goodbye & politeness',
+    icon: '👋',
+    type: 'vocab',
+    xp: 12,
+    steps: buildGreetingsLesson(),
+  },
+  {
+    id: 'tr-c1-l3',
+    title: 'Numbers 1-10',
+    subtitle: 'Counting from one to ten',
+    icon: '🔢',
+    type: 'vocab',
+    xp: 12,
+    steps: buildNumbers1to10Lesson(),
+  },
+  {
+    id: 'tr-c1-l4',
+    title: 'Numbers & Prices',
+    subtitle: '11 to 100, asking the price',
+    icon: '💰',
+    type: 'vocab',
+    xp: 15,
+    steps: buildNumbers11to100Lesson(),
+  },
+  {
+    id: 'tr-c1-l5',
+    title: 'At the Cafe',
+    subtitle: 'Order drinks and food',
+    icon: '☕',
+    type: 'dialogue',
+    xp: 18,
+    steps: buildCafeLesson(),
+  },
+  {
+    id: 'tr-c1-l6',
+    title: 'At the Shop',
+    subtitle: 'Ask prices and buy things',
+    icon: '🛍️',
+    type: 'dialogue',
+    xp: 18,
+    steps: buildShopLesson(),
+  },
+  {
+    id: 'tr-c1-l7',
+    title: 'Getting Around',
+    subtitle: 'Buses, directions, transport',
+    icon: '🚌',
+    type: 'dialogue',
+    xp: 18,
+    steps: buildTransportLesson(),
+  },
+  {
+    id: 'tr-c1-l8',
+    title: 'Meeting People',
+    subtitle: 'Introductions & small talk',
+    icon: '🤝',
+    type: 'dialogue',
+    xp: 15,
+    steps: buildIntroLesson(),
+  },
+  {
+    id: 'tr-c1-l9',
+    title: 'Chapter Review',
+    subtitle: 'Test what you have learned',
+    icon: '🧩',
+    type: 'grammar',
+    xp: 20,
+    steps: buildReviewLesson(),
+  },
+  {
+    id: 'tr-c1-l10',
+    title: 'Your First Conversation',
+    subtitle: 'A full shopping scenario',
+    icon: '🏆',
+    type: 'dialogue',
+    xp: 25,
+    steps: buildFinalScenarioLesson(),
+  },
+];
 
 /* ===== LESSON ENGINE STATE ===== */
 let lessonState = {
