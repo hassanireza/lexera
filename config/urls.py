@@ -8,6 +8,7 @@ urlpatterns = [
     path('', include('core.urls')),
     path('accounts/', include('accounts.urls')),
     path('play/', include('games.urls')),
+    path('turkish/', include('turkish.urls', namespace='turkish')),
 ]
 
 if settings.DEBUG:

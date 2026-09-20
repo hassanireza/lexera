@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Turkish for English Speakers — Lexera{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/turkish.css' %}">
+{% endblock %}
+{% block topbar %}
+<div class="topbar">
+  <a href="{% url 'core:dashboard' %}" style="display:flex;align-items:center;gap:8px;">
+    <img src="{% static 'img/icon-192.png' %}" width="30" height="30" style="border-radius:8px;" alt="Lexera">
+    <span class="font-display" style="font-size:18px;color:var(--indigo-600)">Lexera</span>
+  </a>
+  <div style="display:flex;gap:6px;align-items:center;">
+    <span class="stat-chip" id="trStreak" style="display:none;"><span class="flame">🔥</span><span id="trStreakVal">0</span></span>
+    <span class="badge-pill" style="background:var(--tr-red);color:#fff;font-size:12px;">🇹🇷 Türkçe</span>
+  </div>
+</div>
+{% endblock %}
+{% block content %}
+<div id="trApp">
+  <!-- Language select screen -->
+  <div id="screenLangSelect" class="tr-screen">
+    <div class="tr-hero">
+      <div class="tr-hero-flag">🇹🇷</div>
+      <h1 class="font-display tr-hero-title">Learn Turkish</h1>
+      <p class="tr-hero-sub">From zero to real conversations — step by step, game by game.</p>
+    </div>
+    <div style="padding:0 20px 40px;">
+      <p style="font-weight:800;font-size:13px;color:var(--ink-500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">Your native language</p>
+      <div id="langGrid" class="tr-lang-grid">
+        <button class="tr-lang-btn selected" data-lang="en" onclick="selectLang('en')">
+          <span class="tr-lang-flag">🇬🇧</span>
+          <span class="tr-lang-name">English</span>
+        </button>
+        <button class="tr-lang-btn" data-lang="de" onclick="selectLang('de')">
+          <span class="tr-lang-flag">🇩🇪</span>
+          <span class="tr-lang-name">Deutsch</span>
+        </button>
+        <button class="tr-lang-btn" data-lang="fr" onclick="selectLang('fr')">
+          <span class="tr-lang-flag">🇫🇷</span>
+          <span class="tr-lang-name">Français</span>
+        </button>
+        <button class="tr-lang-btn" data-lang="ar" onclick="selectLang('ar')">
+          <span class="tr-lang-flag">🇸🇦</span>
+          <span class="tr-lang-name">العربية</span>
+        </button>
+        <button class="tr-lang-btn" data-lang="es" onclick="selectLang('es')">
+          <span class="tr-lang-flag">🇪🇸</span>
+          <span class="tr-lang-name">Español</span>
+        </button>
+        <button class="tr-lang-btn" data-lang="nl" onclick="selectLang('nl')">
+          <span class="tr-lang-flag">🇳🇱</span>
+          <span class="tr-lang-name">Nederlands</span>
+        </button>
+      </div>
+      <button class="btn btn-primary btn-block" style="margin-top:28px;" onclick="startJourney()">Start learning Turkish</button>
+      <button class="btn btn-ghost btn-block" style="margin-top:8px;font-size:14px;" onclick="showSkipModal()">Already started? Skip to your level</button>
+    </div>
+  </div>
+
+  <!-- Chapter map screen -->
+  <div id="screenChapterMap" class="tr-screen" style="display:none;">
+    <div class="tr-chapter-hero" style="background:linear-gradient(135deg,var(--tr-red),#B71C1C);">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <span style="font-size:34px;">🇹🇷</span>
+        <div>
+          <div class="font-display" style="color:#fff;font-size:22px;line-height:1.1;">Chapter 1</div>
+          <div style="color:rgba(255,255,255,.75);font-size:13px;">First Steps in Turkish</div>
+        </div>
+      </div>
+      <div id="chapterXpBar" class="xp-bar" style="background:rgba(255,255,255,.2);">
+        <span id="chapterXpFill" style="background:#fff;"></span>
+      </div>
+      <div id="chapterXpLabel" style="color:rgba(255,255,255,.8);font-size:12px;margin-top:6px;font-weight:700;">0 / 10 lessons complete</div>
+    </div>
+
+    <div class="path-wrap" id="lessonPath" style="padding-top:20px;"></div>
+
+    <div style="padding:10px 20px 32px;">
+      <div class="card card-pad" style="background:linear-gradient(135deg,var(--indigo-100),var(--paper));display:flex;gap:14px;align-items:center;">
+        <span style="font-size:28px;">💡</span>
+        <div>
+          <div style="font-weight:800;font-size:14px;">Did you know?</div>
+          <div class="muted" id="didYouKnow" style="font-size:13px;margin-top:3px;">Turkish uses vowel harmony — a beautiful rule where vowels in a word all "match" in sound quality.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skip level modal -->
+  <div id="skipModal" class="tr-modal-backdrop" style="display:none;">
+    <div class="tr-modal card card-pad">
+      <h2 class="font-display" style="margin:0 0 6px;">Skip to your level</h2>
+      <p class="muted" style="font-size:14px;margin:0 0 20px;">Enter the lesson number you last completed, or choose from the list.</p>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px;" id="skipGrid"></div>
+      <button class="btn btn-outline btn-block" onclick="closeSkipModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/turkish.js' %}"></script>
+<script>initTurkishHome();</script>
+{% endblock %}

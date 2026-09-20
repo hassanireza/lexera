@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ lesson_title }} — Turkish — Lexera{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/turkish.css' %}">
+{% endblock %}
+{% block topbar %}{% endblock %}
+{% block tabbar %}{% endblock %}
+{% block content %}
+<div id="trLessonApp" data-lesson="{{ lesson_id }}">
+  <!-- Top bar -->
+  <div class="tr-lesson-topbar">
+    <button class="btn-ghost" id="exitBtn" style="font-size:22px;padding:8px;" onclick="confirmExit()">✕</button>
+    <div class="xp-bar" style="flex:1;"><span id="lessonProgress" style="width:0%;background:linear-gradient(90deg,var(--tr-red),#e53935);"></span></div>
+    <div id="livesDisplay" style="display:flex;gap:4px;"></div>
+  </div>
+
+  <!-- Lesson content area -->
+  <div id="lessonArea" class="game-screen" style="padding-top:10px;"></div>
+
+  <!-- Feedback bar -->
+  <div id="feedbackBar" class="feedback-bar hide">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+      <span id="feedbackIcon" style="font-size:28px;"></span>
+      <div>
+        <div id="feedbackTitle" style="font-weight:800;font-size:16px;"></div>
+        <div id="feedbackSub" style="font-size:13px;margin-top:2px;opacity:.8;"></div>
+      </div>
+    </div>
+    <button id="nextBtn" class="btn btn-block" style="background:var(--ink-900);color:#fff;">Continue</button>
+  </div>
+
+  <!-- Finish overlay (injected by JS) -->
+</div>
+<script src="{% static 'js/turkish.js' %}"></script>
+<script>
+const LESSON_ID = "{{ lesson_id }}";
+const NATIVE_LANG = getTurkishCookie('tr_native_lang') || 'en';
+initTurkishLesson(LESSON_ID, NATIVE_LANG);
+</script>
+{% endblock %}

@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'games',
     'gamification',
     'social',
+    'turkish',
 ]
 
 MIDDLEWARE = [

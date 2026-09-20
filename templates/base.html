@@ -71,6 +71,9 @@
     <a href="{% url 'accounts:friends' %}" class="tab-item {% if request.resolver_match.url_name == 'friends' %}active{% endif %}">
       <span class="icon">👥</span>Friends
     </a>
+    <a href="{% url 'turkish:home' %}" class="tab-item {% if request.resolver_match.app_name == 'turkish' %}active{% endif %}">
+      <span class="icon">🇹🇷</span>Turkish
+    </a>
     <a href="{% url 'accounts:profile' username=user.username %}" class="tab-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
       <span class="icon">{{ user.avatar_emoji }}</span>Profile
     </a>
